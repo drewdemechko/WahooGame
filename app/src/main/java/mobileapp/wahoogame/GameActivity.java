@@ -14,14 +14,12 @@ import java.util.Random;
 
 public class GameActivity extends Activity {
 
-    //The skeleton class, used to display graphics
+    //The skeleton class, used to display graphics only
 
     public void startGame() {
 
         //Create new GameBoard object to store data
         GameBoard currentBoard = new GameBoard();
-
-        //TextView diceThrow = (TextView)findViewById(R.id.diceThrow);
 
         //Draws blank 15x15 grid that will represent the board
         GridLayout Board = (GridLayout) findViewById(R.id.GridLayout);
@@ -32,7 +30,6 @@ public class GameActivity extends Activity {
             Tiles[i] = new ImageView(this); // keep reference of the new ImageViews in Tiles[]
             Board.addView(Tiles[i]);
             Tiles[i].setImageResource(R.drawable.woodtile);
-            //currentBoard.holes[i].Location
         }
 
         //Draw hole images on board
@@ -40,7 +37,6 @@ public class GameActivity extends Activity {
             {
                 Tiles[x].setImageResource(R.drawable.hole);
             }
-        currentBoard.drawBoard();
     }
 
 

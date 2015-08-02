@@ -36,45 +36,17 @@ public class GameBoard {
                  106,107,108,109  //end of home
                 };//end of all
 
-        mainTrackLocations = new int[] {75, 76, 77, 78, 79, 80, 65, 50, 35, 20, 5, 6, 7, 8, 9, 24,
-                                        39, 54, 69, 84, 85, 86, 87, 88, 89, 104, 119, 134, 149,
-                                        148, 147, 146, 145, 144, 159, 174, 189, 204, 219, 218,
-                                        217, 216, 215, 200, 185, 170, 155, 140, 139, 138, 137,
-                                        136, 135, 120, 105, 90}; //counter clockwise starting
-                                                                 // with player1 maintrack
-
         holes = new Hole[88];
 
         //Creates new hole objects
-        for(int i = 0; i < holes.length; i++) {
-
+        for(int i = 0; i < holes.length; i++)
+        {
             holes[i] = new Hole();
-
-            if (i < 16)
-                holes[i].setAsStartingPosition();
-            else if (i > 71)
-                holes[i].setAsHome();
-            else
-                holes[i].setAsMainTrack();
-
             holes[i].setGridLocation(allHoleLocations[i]);
         }
 
     }
 
-    public void drawBoard(){
-        //Stores the location on the board of each hole object
-        for(int i = 0; i < holes.length; i++) {
-            //if (i < 16)
-              //  holes[i].setAsStartingPosition();
-            //else if (i > 71)
-             //   holes[i].setAsHome();
-            //else
-                //holes[i].setAsMainTrack();
-
-            holes[i].setGridLocation(allHoleLocations[i]);
-        }
-    }
     public void clearBoard()
     {
         //Resets the data back to default values for new game

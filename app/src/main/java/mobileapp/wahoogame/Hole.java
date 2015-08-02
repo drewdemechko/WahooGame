@@ -17,16 +17,26 @@ public class Hole {
     private Player player;
 
     //Static methods used to save memory (only creates once)
+    //Cannot be manipulated
 
     static int[] startingLocations = {0,16,32,48,
                                       14,28,42,56,
                                       224,208,192,176,
-                                      210,196,182,168};
+                                      210,196,182,168}; //When new player created check 4 holes at a time to determine which ones are not
+                                                        // occupied by a player (synchronization may come in here)
 
     static int[] homeLocations = {22,37,52,67,
                                   118,117,116,115,
                                   202,187,172,157,
-                                  106,107,108,109};
+                                  106,107,108,109}; //When new player created check 4 holes at a time to determine which ones are not
+                                                    // occupied by a player (synchronization may come in here)
+
+    static int[] mainTrackLocations = {75, 76, 77, 78, 79, 80, 65, 50, 35, 20, 5, 6, 7, 8, 9, 24,
+            39, 54, 69, 84, 85, 86, 87, 88, 89, 104, 119, 134, 149,
+            148, 147, 146, 145, 144, 159, 174, 189, 204, 219, 218,
+            217, 216, 215, 200, 185, 170, 155, 140, 139, 138, 137,
+            136, 135, 120, 105, 90}; //counter clockwise starting
+                                     // with player1 (top left) maintrack
 
     public Hole()
     {
@@ -70,21 +80,16 @@ public class Hole {
             if (gridLocation == x)
                 startingPosition = true;
         }
-    }
 
-    public void setAsStartingPosition()
-    {
-        startingPosition = true;
-    }
+        for(int x: homeLocations){
+            if (gridLocation == x)
+                home = true;
+        }
 
-    public void setAsHome()
-    {
-        home = true;
-    }
-
-    public void setAsMainTrack()
-    {
-        onMainTrack = true;
+        for(int x: mainTrackLocations){
+            if(gridLocation == x)
+                onMainTrack = true;
+        }
     }
 
     public boolean isHome()
@@ -92,8 +97,7 @@ public class Hole {
         return home;
     }
 
-    public boolean isStartingPosition()
-    {
+    public boolean isStartingPosition() {
         return isStartingPosition();
     }
 
