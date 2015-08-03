@@ -14,7 +14,7 @@ public class Hole {
     private boolean home;
     private boolean startingPosition;
 
-    private Player player;
+    private Player player; //Keeps track of player in the hole
 
     //Static methods used to save memory (only creates once)
     //Cannot be manipulated
@@ -65,6 +65,11 @@ public class Hole {
         return(empty);
     }
 
+    public void setFull()
+    {
+        empty = false;
+    }
+
     public void setEmpty()
     {
         //Sets the hole back to default values (empty)
@@ -92,6 +97,11 @@ public class Hole {
         }
     }
 
+    public int getGridLocation()
+    {
+        return gridLocation;
+    }
+
     public boolean isHome()
     {
         return home;
@@ -104,5 +114,15 @@ public class Hole {
     public boolean isOnMainTrack()
     {
         return onMainTrack;
+    }
+
+    public void setPlayer(Player p)
+    {
+        player = p;
+    }
+
+    public void releasePlayer()
+    {
+        player = null;
     }
 }

@@ -10,11 +10,19 @@ public class Player {
     int marble2;
     int marble3;
     int marble4;
+
+    int[] homeLocations = new int[4];
+    int[] startingLocations = new int[4];
+
+    //May need this later, not sure yet
+    private boolean isAlive = false;
     //I think we may need a Starting location of int[] to keep track for knock offs/set backs
 
     public Player(String c)
     {
         color = c;
+        isAlive = true;
+        //Find starting and home locations for new player
     }
 
     public String getColor()

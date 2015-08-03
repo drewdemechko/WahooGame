@@ -1,6 +1,7 @@
 package mobileapp.wahoogame;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +21,10 @@ public class GameActivity extends Activity {
     GameBoard currentBoard;                 //GameBoard object
     private TextView diceThrow;             //TextView displaying number on dice
     private boolean gameOver = false;       //True if game is over
-
-
-
+    private boolean choseMarble = false;
+    private boolean choseDestination = false;
+    private int chosenmarble;
+    private Drawable savedImage; //Copies marble image so that it can redraw to a new location
 
 
     //StartGame sets up new game
@@ -48,53 +50,36 @@ public class GameActivity extends Activity {
         //Draw hole images on board
         for (int x : currentBoard.getallHoleLocations()) {
             Tiles[x].setImageResource(R.drawable.emptyhole);
-
-
+            Tiles[x].setOnClickListener(new HoleImageClickListener(x));
         }
 
-        //Blue Marbles
-        Tiles[168].setImageResource(R.drawable.bluemarble);
-        Tiles[168].setOnClickListener(new BlueImageClickListener(168));
-        Tiles[182].setImageResource(R.drawable.bluemarble);
-        Tiles[182].setOnClickListener(new BlueImageClickListener(182));
-        Tiles[196].setImageResource(R.drawable.bluemarble);
-        Tiles[196].setOnClickListener(new BlueImageClickListener(196));
-        Tiles[210].setImageResource(R.drawable.bluemarble);
-        Tiles[210].setOnClickListener(new BlueImageClickListener(210));
+        //Draw all 4 players marbles to the board
+        for (int x: currentBoard.player1.startingLocations)
+            Tiles[x].setImageResource(findMarbleColor(currentBoard.player1));
 
-        //Red Marbles
-        Tiles[0].setImageResource(R.drawable.redmarble);
-        Tiles[0].setOnClickListener(new RedImageClickListener(0));
-        Tiles[16].setImageResource(R.drawable.redmarble);
-        Tiles[16].setOnClickListener(new RedImageClickListener(16));
-        Tiles[32].setImageResource(R.drawable.redmarble);
-        Tiles[32].setOnClickListener(new RedImageClickListener(32));
-        Tiles[48].setImageResource(R.drawable.redmarble);
-        Tiles[48].setOnClickListener(new RedImageClickListener(48));
+        for (int x: currentBoard.player2.startingLocations)
+            Tiles[x].setImageResource(findMarbleColor(currentBoard.player2));
 
-        //Green Marbles
-        Tiles[176].setImageResource(R.drawable.greenmarble);
-        Tiles[176].setOnClickListener(new GreenImageClickListener(176));
-        Tiles[192].setImageResource(R.drawable.greenmarble);
-        Tiles[192].setOnClickListener(new GreenImageClickListener(192));
-        Tiles[208].setImageResource(R.drawable.greenmarble);
-        Tiles[208].setOnClickListener(new GreenImageClickListener(208));
-        Tiles[224].setImageResource(R.drawable.greenmarble);
-        Tiles[224].setOnClickListener(new GreenImageClickListener(224));
+        for (int x: currentBoard.player3.startingLocations)
+            Tiles[x].setImageResource(findMarbleColor(currentBoard.player3));
 
-        //Yellow Marbles
-        Tiles[56].setImageResource(R.drawable.yellowmarble);
-        Tiles[56].setOnClickListener(new YellowImageClickListener(56));
-        Tiles[42].setImageResource(R.drawable.yellowmarble);
-        Tiles[42].setOnClickListener(new YellowImageClickListener(42));
-        Tiles[28].setImageResource(R.drawable.yellowmarble);
-        Tiles[28].setOnClickListener(new YellowImageClickListener(28));
-        Tiles[14].setImageResource(R.drawable.yellowmarble);
-        Tiles[14].setOnClickListener(new YellowImageClickListener(14));
-
-
+        for (int x: currentBoard.player4.startingLocations)
+            Tiles[x].setImageResource(findMarbleColor(currentBoard.player4));
     }
 
+    public int findMarbleColor(Player p)
+    {
+        if(p.getColor() == "blue")
+            return R.drawable.bluemarble;
+        else if(p.getColor() == "red")
+            return R.drawable.redmarble;
+        else if(p.getColor() == "yellow")
+            return R.drawable.yellowmarble;
+        else if(p.getColor() == "green")
+            return R.drawable.greenmarble;
+        else
+            return R.drawable.placeholder;
+    }
     //currentGame runs until game ends
     private void currentGame(){
 
@@ -147,102 +132,50 @@ public class GameActivity extends Activity {
         diceThrow.setText(stringRoll);
     }
 
-
-    //Listener for Blue Marbles
-    private class BlueImageClickListener implements View.OnClickListener {
+    //Listens for clicks on holes
+    private class HoleImageClickListener implements View.OnClickListener {
 
         int location;
 
-        public BlueImageClickListener(int location){this.location = location;}
+        public HoleImageClickListener(int location){this.location = location;}
 
         public void onClick(View view){
+            try {
+                //Selects current players marble and stores it as well as the marble image
+                if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
+                        || location == currentBoard.current.marble3 || location == currentBoard.current.marble4) && (choseMarble == false)) {
+                    currentBoard.setOldRequested(location);
+                    choseMarble = true;
+                    chosenmarble = location;
+                    savedImage = Tiles[location].getDrawable(); //Keeps current image saved
+                    Tiles[location].setImageResource(R.drawable.placeholder);
+                }
+                else if(location == chosenmarble)
+                {
+                    choseMarble = false;
+                    Tiles[location].setImageDrawable(savedImage);
+                }
 
-            if(pieceSelected == false){
-                Tiles[location].setImageResource(R.drawable.selectedbluemarble);
+                if(choseMarble)
+                {
+                    choseDestination = true;
+                    //CHECKS IF ISLEGAL move
+                    currentBoard.setNewRequested(location);
+                }
+            }catch(Exception e)
+            {
+                //Spit error
+            }
+
+            /*if(pieceSelected == false){
+                Tiles[location].setImageResource(R.drawable.placeholder);
                 pieceSelected = true;
             }
             else
             {
-                Tiles[location].setImageResource(R.drawable.bluemarble);
-                pieceSelected = false;
-            }
-
-
+                //return error and try another location
+            }*/
         }
-
     }
-
-    //Listener for red marbles
-    private class RedImageClickListener implements View.OnClickListener {
-
-        int location;
-
-        public RedImageClickListener(int location){this.location = location;}
-
-        public void onClick(View view){
-
-            if(pieceSelected == false){
-                Tiles[location].setImageResource(R.drawable.selectedredmarble);
-                pieceSelected = true;
-            }
-            else
-            {
-                Tiles[location].setImageResource(R.drawable.redmarble);
-                pieceSelected = false;
-            }
-
-
-        }
-
-    }
-
-    //Listener for green marbles
-    private class GreenImageClickListener implements View.OnClickListener {
-
-        int location;
-
-        public GreenImageClickListener(int location){this.location = location;}
-
-        public void onClick(View view){
-
-            if(pieceSelected == false){
-                Tiles[location].setImageResource(R.drawable.selectedgreenmarble);
-                pieceSelected = true;
-            }
-            else
-            {
-                Tiles[location].setImageResource(R.drawable.greenmarble);
-                pieceSelected = false;
-            }
-
-
-        }
-
-    }
-
-    //Listener for yellow marbles
-    private class YellowImageClickListener implements View.OnClickListener {
-
-        int location;
-
-        public YellowImageClickListener(int location){this.location = location;}
-
-        public void onClick(View view){
-
-            if(pieceSelected == false){
-                Tiles[location].setImageResource(R.drawable.selectedyellowmarble);
-                pieceSelected = true;
-            }
-            else
-            {
-                Tiles[location].setImageResource(R.drawable.yellowmarble);
-                pieceSelected = false;
-            }
-
-
-        }
-
-    }
-
 }
 
