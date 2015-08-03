@@ -20,6 +20,7 @@ public class GameActivity extends Activity {
     private boolean pieceSelected = false;  //True if piece is selected
     GameBoard currentBoard;                 //GameBoard object
     private TextView diceThrow;             //TextView displaying number on dice
+    private TextView playerTurn;            //Display current player
     private boolean gameOver = false;       //True if game is over
     private boolean choseMarble = false;
     private boolean choseDestination = false;
@@ -82,13 +83,18 @@ public class GameActivity extends Activity {
     }
     //currentGame runs until game ends
     private void currentGame(){
+        currentTurn();
 
         //Loops until a player wins
-        while(gameOver == false){
+        //while(gameOver == false){
 
 
+        //}
+    }
 
-        }
+    private void currentTurn(){
+        playerTurn.setText("Drew Sucks!");
+        gameOver = true;
     }
 
 
@@ -97,9 +103,11 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         diceThrow = (TextView) findViewById(R.id.diceThrow);
+        playerTurn = (TextView) findViewById(R.id.playerturn);
         //Draw Game Board
+
         startGame();
-        //currentGame();
+        currentGame();
     }
 
     @Override
