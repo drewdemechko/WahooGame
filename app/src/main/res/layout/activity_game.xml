@@ -8,22 +8,42 @@
     tools:context="mobileapp.wahoogame.GameActivity"
     tools:targetApi="11">
 
-    <GridLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/GridLayout"
-        android:columnCount="15"
-        android:rowCount="15"
-        android:longClickable="false"
-        android:layout_above="@+id/relativeLayout">
-    </GridLayout>
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/wood_grain"
+        android:gravity="center">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:id="@+id/GridLayout"
+            android:columnCount="15"
+            android:rowCount="15"
+            android:longClickable="false"
+            android:layout_above="@+id/relativeLayout"
+            android:orientation="horizontal"
+            android:useDefaultMargins="false"
+            android:rowOrderPreserved="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="false">
+        </GridLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -33,12 +53,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Roll Dice"
-            android:id="@+id/button2"
+            android:id="@+id/rollDice"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
-            android:nestedScrollingEnabled="true" />
+            android:nestedScrollingEnabled="true"
+            android:onClick="rollDice" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,8 +71,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button2"
-            android:layout_toEndOf="@+id/button2"
+            android:layout_toRightOf="@+id/rollDice"
+            android:layout_toEndOf="@+id/rollDice"
             android:autoText="false"
             android:textColor="#ffb4ff54"
             android:gravity="center_vertical|center_horizontal"

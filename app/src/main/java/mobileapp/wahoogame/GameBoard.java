@@ -113,10 +113,12 @@ public class GameBoard {
         return startingLocations;
     }
 
-    public int diceRollValue()
+    public int getCurrentRoll()
     {
         //some condition statements, if turn
         currentRoll = diceRoll.nextInt(6)+1;
-        return currentRoll; //return 0 if unable to roll
+
+        return currentRoll;
+
     }
 }
