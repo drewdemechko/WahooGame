@@ -8,17 +8,34 @@
     tools:context="mobileapp.wahoogame.GameActivity"
     tools:targetApi="11">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Player Turn"
+        android:id="@+id/playerturn"
+        android:textColor="#ff64ff2a"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="32dp"
+        android:textAlignment="gravity"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout"
+        android:gravity="center_horizontal" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/relativeLayout"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:background="@drawable/wood_grain"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/playerturn"
+        android:id="@+id/linearLayout">
 
         <GridLayout
             android:layout_width="wrap_content"
