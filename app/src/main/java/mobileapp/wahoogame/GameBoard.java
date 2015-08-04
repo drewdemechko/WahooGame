@@ -20,6 +20,7 @@ public class GameBoard {
     private int currentRoll; //stores the value of the most recent dice roll
 
     private boolean winnerFound = false;
+    private boolean diceRolled = false;
 
     Player player1;
     Player player2;
@@ -254,6 +255,10 @@ public class GameBoard {
     {
         return startingLocations;
     }
+
+    public boolean getDiceRolled(){return diceRolled;}
+
+    public void setDiceRolledTrue(){diceRolled = true;}
 
     public int getCurrentRoll()
     {

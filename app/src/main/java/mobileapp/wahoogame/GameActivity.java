@@ -17,7 +17,7 @@ public class GameActivity extends Activity {
 
 
     ImageView Tiles[] = new ImageView[225]; //Array of ImageVies displaying holes and marbles
-    private boolean pieceSelected = false;  //True if piece is selected
+    //private boolean pieceSelected = false;  //True if piece is selected
     GameBoard currentBoard;                 //GameBoard object
     private TextView diceThrow;             //TextView displaying number on dice
     private TextView playerTurn;            //Display current player
@@ -81,6 +81,22 @@ public class GameActivity extends Activity {
         else
             return R.drawable.placeholder;
     }
+
+    //returns selectedmarble image of player color
+    public int findSelectedMarbleColor(Player p)
+    {
+        if(p.getColor() == "blue")
+            return R.drawable.selectedbluemarble;
+        else if(p.getColor() == "red")
+            return R.drawable.selectedredmarble;
+        else if(p.getColor() == "yellow")
+            return R.drawable.selectedyellowmarble;
+        else if(p.getColor() == "green")
+            return R.drawable.selectedgreenmarble;
+        else
+            return R.drawable.placeholder;
+    }
+
     //currentGame runs until game ends
     private void currentGame(){
         currentTurn();
@@ -134,10 +150,15 @@ public class GameActivity extends Activity {
 
     public void rollDice(View v){
         int roll;
-        roll = currentBoard.getCurrentRoll();
-        String stringRoll = Integer.toString(roll);
 
-        diceThrow.setText(stringRoll);
+        if(currentBoard.getDiceRolled() == false){
+            roll = currentBoard.getCurrentRoll();
+            String stringRoll = Integer.toString(roll);
+
+            diceThrow.setText(stringRoll);
+            currentBoard.setDiceRolledTrue();
+        }
+
     }
 
     //Listens for clicks on holes
@@ -151,14 +172,16 @@ public class GameActivity extends Activity {
             try {
                 //Selects current players marble and stores it as well as the marble image
                 if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
-                        || location == currentBoard.current.marble3 || location == currentBoard.current.marble4) && (choseMarble == false)) {
+                        || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
+                        && (choseMarble == false) && (currentBoard.getDiceRolled() == true)) {
+
                     currentBoard.setOldRequested(location);
                     choseMarble = true;
                     chosenmarble = location;
                     savedImage = Tiles[location].getDrawable(); //Keeps current image saved
-                    Tiles[location].setImageResource(R.drawable.placeholder);
+                    Tiles[location].setImageResource(findSelectedMarbleColor(currentBoard.current));
                 }
-                else if(location == chosenmarble)
+                else if(choseMarble == true && location == chosenmarble)
                 {
                     choseMarble = false;
                     Tiles[location].setImageDrawable(savedImage);

@@ -1,5 +1,8 @@
 package mobileapp.wahoogame;
 
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 /**
  * Created by Drew Demechko on 8/1/2015.
  */
@@ -10,6 +13,8 @@ public class Player {
     int marble2;
     int marble3;
     int marble4;
+
+    private Drawable selectedMarble;
 
     int[] homeLocations = new int[4];
     int[] startingLocations = new int[4];
@@ -22,7 +27,11 @@ public class Player {
     {
         color = c;
         isAlive = true;
+
         //Find starting and home locations for new player
+
+
+
     }
 
     public String getColor()
@@ -35,6 +44,8 @@ public class Player {
         //Sets up the default marble locations by checking if marbles are at
         // the other 4 locations starting from the top left
     }
+
+
 
     //Not sure if we will need this one because the players shouldn't be
     // able to change colors mid game
