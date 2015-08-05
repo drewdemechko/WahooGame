@@ -21,10 +21,11 @@ public class GameActivity extends Activity {
     GameBoard currentBoard;                 //GameBoard object
     private TextView diceThrow;             //TextView displaying number on dice
     private TextView playerTurn;            //Display current player
+    private boolean hasRolled = false;
     private boolean gameOver = false;       //True if game is over
     private boolean choseMarble = false;
     private boolean choseDestination = false;
-    private int chosenmarble;
+    private int chosenMarbleLocation;
     private Drawable savedImage; //Copies marble image so that it can redraw to a new location
 
 
@@ -133,47 +134,79 @@ public class GameActivity extends Activity {
     }
 
     public void rollDice(View v){
-        int roll;
-        roll = currentBoard.getCurrentRoll();
-        String stringRoll = Integer.toString(roll);
+        if(hasRolled == false) {
+            int roll;
+            currentBoard.setDiceRoll(); //rolls dice once
+            roll = currentBoard.getCurrentRoll(); //stores dice roll value
+            String stringRoll = Integer.toString(roll);
 
-        diceThrow.setText(stringRoll);
+            diceThrow.setText(stringRoll);
+            hasRolled = true;
+        }
+        else
+        {
+            //fail to roll dice, send error message to user
+        }
     }
 
+    public void move()
+    {
+
+    }
     //Listens for clicks on holes
     private class HoleImageClickListener implements View.OnClickListener {
 
         int location;
 
-        public HoleImageClickListener(int location){this.location = location;}
+        public HoleImageClickListener(int location) {
+            this.location = location;
+        }
 
-        public void onClick(View view){
-            try {
-                //Selects current players marble and stores it as well as the marble image
-                if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
-                        || location == currentBoard.current.marble3 || location == currentBoard.current.marble4) && (choseMarble == false)) {
-                    currentBoard.setOldRequested(location);
-                    choseMarble = true;
-                    chosenmarble = location;
-                    savedImage = Tiles[location].getDrawable(); //Keeps current image saved
-                    Tiles[location].setImageResource(R.drawable.placeholder);
+        public void onClick(View view) {
+                    try { //safety net
+                        if(hasRolled)
+                            move();
+                        //else
+                            //print error, please roll the dice first
+                } catch (Exception e) {
+                    //Spit error
                 }
-                else if(location == chosenmarble)
-                {
-                    choseMarble = false;
+    }
+        public void move()
+        {
+            //Selects current players marble and stores it as well as the marble image
+            if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
+                    || location == currentBoard.current.marble3 || location == currentBoard.current.marble4) && (choseMarble == false)) {
+                currentBoard.setOldRequested(location);
+                choseMarble = true;
+                chosenMarbleLocation = location;
+                savedImage = Tiles[location].getDrawable(); //Keeps current image saved
+                Tiles[location].setImageResource(R.drawable.placeholder);
+            } else if (location == chosenMarbleLocation) {
+                choseMarble = false;
+                Tiles[location].setImageDrawable(savedImage);
+            } else if (choseMarble == true && choseDestination == false) {
+                choseDestination = true;
+                currentBoard.setNewRequested(location);
+                //CHECKS IF ISLEGAL move
+                if(currentBoard.isLegalMove()) {
+                    //
                     Tiles[location].setImageDrawable(savedImage);
-                }
+                    Tiles[chosenMarbleLocation].setImageResource(R.drawable.emptyhole);
+                    choseDestination = false;
+                    choseMarble = false;
 
-                if(choseMarble)
-                {
-                    choseDestination = true;
-                    //CHECKS IF ISLEGAL move
-                    currentBoard.setNewRequested(location);
+                    hasRolled = false;
+                    currentBoard.nextTurn();
                 }
-            }catch(Exception e)
-            {
-                //Spit error
+                else
+                {
+                    //Move not legal
+                    //print out error message and reset values to original
+                    return;
+                }
             }
+        }
 
             /*if(pieceSelected == false){
                 Tiles[location].setImageResource(R.drawable.placeholder);
@@ -184,6 +217,8 @@ public class GameActivity extends Activity {
                 //return error and try another location
             }*/
         }
+        public void waitOnMove() {
+
+        }
     }
-}
 

@@ -106,6 +106,8 @@ public class GameBoard {
                 player1.startingLocations[2] = player1.marble3;
                 player1.marble4 = tempstart[3];
                 player1.startingLocations[3] = player1.marble4;
+                player1.setFirstHole(75);
+                player1.setLastHole(105);
                 current = player1; //Set players turn
             }
             else if(player2 == null)
@@ -132,6 +134,8 @@ public class GameBoard {
                 player2.startingLocations[2] = player2.marble3;
                 player2.marble4 = tempstart[7];
                 player2.startingLocations[3] = player2.marble4;
+                player2.setFirstHole(9);
+                player2.setLastHole(7);
             }
             else if(player3 == null)
             {
@@ -157,6 +161,8 @@ public class GameBoard {
                 player3.startingLocations[2] = player3.marble3;
                 player3.marble4 = tempstart[11];
                 player3.startingLocations[3] = player3.marble4;
+                player3.setFirstHole(149);
+                player3.setLastHole(119);
             }
             else if(player4 == null)
             {
@@ -182,6 +188,8 @@ public class GameBoard {
                 player4.startingLocations[2] = player4.marble3;
                 player4.marble4 = tempstart[15];
                 player4.startingLocations[3] = player4.marble4;
+                player4.setFirstHole(215);
+                player4.setLastHole(217);
             }
         }catch(Exception e)
         {
@@ -194,7 +202,7 @@ public class GameBoard {
         //Resets the data back to default values for new game
     }
 
-    public void setMove(String color, int startLoc, int endLoc)
+    public void setMove(int startLoc, int endLoc)
     {
 
         if(isLegalMove())
@@ -227,12 +235,113 @@ public class GameBoard {
 
     public boolean isLegalMove()
     {
-        //if(something)
-        //knockoff();
+        int tempOldLoc = getOldRequestedLocation();
+        int tempNewLoc = getNewRequestedLocation();
+        int tempOldIndex;
+        int tempNewIndex;
+        boolean inStartingLocation = false;
+        int startingCount = 0;
+        boolean inHomeLocation = false;
+        int homeCount = 0;
+        boolean completedTurn = false;
 
-        //This will be a pretty decent sized method because it will be
-        // checking for various conditions
-        return true;
+        //Check if marble being moved is in start
+        for(int x: Hole.startingLocations)
+        {
+            if(x == tempOldLoc) {
+                inStartingLocation = true;
+                startingCount++;
+            }
+        }
+
+        for(int x: Hole.homeLocations)
+        {
+            if(x == tempOldLoc)
+            {
+                inHomeLocation = true;
+                homeCount++;
+            }
+        }
+
+        //Finds index location in allholesarray
+        tempOldIndex = Hole.FindHole(tempOldLoc);
+        tempNewIndex = Hole.FindHole(tempNewLoc);
+
+        //If selected marble is in home location or on main track
+        if(inStartingLocation == false)
+        {
+            if(tempOldIndex + getCurrentRoll() == tempNewIndex)
+            {
+                //Find which marble the user wants to move
+                if(current.marble1 == tempOldLoc)
+                {
+                    current.marble1 = tempNewLoc;
+                }
+                else if(current.marble2 == tempOldLoc)
+                {
+                    current.marble2 = tempNewLoc;
+                }
+                else if(current.marble3 == tempOldLoc)
+                {
+                    current.marble3 = tempNewLoc;
+                }
+                else if(current.marble4 == tempOldLoc)
+                {
+                    current.marble4 = tempNewLoc;
+                }
+
+                completedTurn = true;
+            }
+            else
+            {
+                //return error, could not move
+            }
+
+        }
+        //If selected marble is in starting location
+        else if((getCurrentRoll() == 6 || getCurrentRoll() == 1) && tempNewLoc == current.getfirstHole() && inStartingLocation)
+        {
+        //Find which marble the user wants to move
+            if(current.marble1 == tempOldLoc)
+            {
+                current.marble1 = tempNewLoc;
+            }
+            else if(current.marble2 == tempOldLoc)
+            {
+                current.marble2 = tempNewLoc;
+            }
+            else if(current.marble3 == tempOldLoc)
+            {
+                current.marble3 = tempNewLoc;
+            }
+            else if(current.marble4 == tempOldLoc)
+            {
+                current.marble4 = tempNewLoc;
+            }
+            completedTurn = true;
+        }
+        else
+        {
+            //Return error, illegal move
+            completedTurn = false;
+        }
+
+        if(completedTurn)
+        {
+            //holes[tempNewIndex] = FILLHOLE
+            //holes[tempNewIndex] = SetCurrentPlayerColor
+            //holes[tempOldIndex] = SETEMPTY
+            //holes[tempOldIndex] = SetColor to "none"
+            return true;
+        }
+        else
+        {
+            return false;
+            //knockoff();
+
+            //This will be a pretty decent sized method because it will be
+            // checking for various conditions
+        }
     }
 
     public int[] getallHoleLocations()
@@ -255,11 +364,14 @@ public class GameBoard {
         return startingLocations;
     }
 
+    public void setDiceRoll()
+    {
+        //currentRoll = diceRoll.nextInt(6)+1;
+        currentRoll = 6;
+    }
     public int getCurrentRoll()
     {
-        //some condition statements, if turn
-        currentRoll = diceRoll.nextInt(6)+1;
-        return currentRoll; //return 0 if unable to roll
+        return currentRoll;
     }
 
     public boolean isGameOver()
@@ -286,8 +398,18 @@ public class GameBoard {
         newRequestedLocation = r;
     }
 
+    public int getNewRequestedLocation()
+    {
+        return newRequestedLocation;
+    }
+
     public void setOldRequested(int r)
     {
         oldRequestedLocation = r;
+    }
+
+    public int getOldRequestedLocation()
+    {
+        return oldRequestedLocation;
     }
 }

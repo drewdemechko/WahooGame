@@ -13,6 +13,7 @@ public class Hole {
     private boolean onMainTrack;
     private boolean home;
     private boolean startingPosition;
+    private int marbleId; //Holds marbleid
 
     private Player player; //Keeps track of player in the hole
 
@@ -37,6 +38,23 @@ public class Hole {
             217, 216, 215, 200, 185, 170, 155, 140, 139, 138, 137,
             136, 135, 120, 105, 90}; //counter clockwise starting
                                      // with player1 (top left) maintrack
+
+    //Initialize the constant locations of all holes
+    static int[] allHoleLocations =
+    {//start of all
+                0,16,32,48, //starting (0)
+                14,28,42,56,
+                224,208,192,176,
+                210,196,182,168, //end of starting (15)
+                75, 76, 77, 78, 79, 80, 65, 50, 35, 20, 5, 6, 7, 8, 9, 24, //main track (16)
+                39, 54, 69, 84, 85, 86, 87, 88, 89, 104, 119, 134, 149, 148, 147,
+                146, 145, 144, 159, 174, 189, 204, 219, 218, 217, 216, 215, 200, 185,
+                170, 155, 140, 139, 138, 137, 136, 135, 120, 105, 90, //end of main track (71)
+                22,37,52,67, //home (72)
+                118,117,116,115,
+                202,187,172,157,
+                106,107,108,109  //end of home (87)
+    };//end of all
 
     public Hole()
     {
@@ -121,8 +139,25 @@ public class Hole {
         player = p;
     }
 
+    public void setMarbleid(int m)
+    {
+        marbleId = m;
+    }
+
     public void releasePlayer()
     {
         player = null;
+    }
+
+    //Finds a hole by gridvalue and returns the index in allHoleLocations
+    public static int FindHole(int n) //pass gridlocation
+    {
+        for(int i = 0; i < allHoleLocations.length; i++)
+        {
+            if(allHoleLocations[i] == n)
+                return i;
+        }
+        //print some error message
+        return 0;
     }
 }
