@@ -221,10 +221,6 @@ public class GameActivity extends Activity {
                     //print out error message and reset values to original
                     return;
                 }
-            }catch(Exception e)
-            {
-                //Spit error
-            }
         }
 
             /*if(pieceSelected == false){
