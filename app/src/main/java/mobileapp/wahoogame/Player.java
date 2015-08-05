@@ -1,5 +1,8 @@
 package mobileapp.wahoogame;
 
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 /**
  * Created by Drew Demechko on 8/1/2015.
  */
@@ -10,6 +13,8 @@ public class Player {
     int marble2;
     int marble3;
     int marble4;
+
+    private Drawable selectedMarble;
 
     int[] homeLocations = new int[4];
     int[] startingLocations = new int[4];

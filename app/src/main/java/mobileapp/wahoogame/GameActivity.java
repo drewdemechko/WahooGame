@@ -82,6 +82,22 @@ public class GameActivity extends Activity {
         else
             return R.drawable.placeholder;
     }
+
+    //returns selectedmarble image of player color
+    public int findSelectedMarbleColor(Player p)
+    {
+        if(p.getColor() == "blue")
+            return R.drawable.selectedbluemarble;
+        else if(p.getColor() == "red")
+            return R.drawable.selectedredmarble;
+        else if(p.getColor() == "yellow")
+            return R.drawable.selectedyellowmarble;
+        else if(p.getColor() == "green")
+            return R.drawable.selectedgreenmarble;
+        else
+            return R.drawable.placeholder;
+    }
+
     //currentGame runs until game ends
     private void currentGame(){
         currentTurn();
@@ -205,6 +221,9 @@ public class GameActivity extends Activity {
                     //print out error message and reset values to original
                     return;
                 }
+            }catch(Exception e)
+            {
+                //Spit error
             }
         }
 
@@ -221,4 +240,5 @@ public class GameActivity extends Activity {
 
         }
     }
+}
 
