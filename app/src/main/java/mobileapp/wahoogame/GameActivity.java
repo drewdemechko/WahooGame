@@ -21,53 +21,51 @@ public class GameActivity extends Activity {
     private TextView diceThrow;              //Used to display the number rolled by the dice
     private TextView playerTurn;             //Used to display which players turn it is
     private boolean hasRolled = false;       //To check if the dice has been rolled for the current player
-    private boolean gameOver = false;
-    private boolean hasChosenMarble = false; //Checks if user has chosen a marble they want to see the moves of
-    private int chosenMarbleLocation;
-    private int newchosenMarbleLocation;
-    private Drawable savedCurrentMarbleImage; //Copies marble image so that it can redraw to a new location
-    private Drawable savedFutureImage;
+    private boolean isGameOver = false;
+    private boolean hasChosenMarble = false; //To check if user has chosen a marble they want to see the possible moves for
 
-    //StartGame sets up new game
+    private int marbleLocation;              //Copies the marbles location that the user clicked on
+    private int newMarbleLocation;           //Where to draw the new marble
+
+    private Drawable savedCurrentMarbleImage;//Copies marble image depending on players color
+    private Drawable savedFutureImage;       //Copies image of newMarbleLocation in case user decides to NOT move
+
+    private int roll;                       //Holds the value of current roll
+
+    //Sets up new blank Wahoo board
     public void startGame() {
 
-        //Create new GameBoard object to store data
+        //Create new GameBoard object to store all data
         currentBoard = new GameBoard();
-
-        //TextView diceThrow = (TextView)findViewById(R.id.diceThrow);
 
         //Draws blank 15x15 grid that will represent the board
         GridLayout Board = (GridLayout) findViewById(R.id.GridLayout);
 
 
-        //Add new imageview objects to Board and set default resource to blank wood tiles
+        //Add new imageview objects to layout a blank Board
         for (int i = 0; i < Tiles.length; i++) {
-            Tiles[i] = new ImageView(this); // keep reference of the new ImageViews in Tiles[]
+            Tiles[i] = new ImageView(this); // keep a reference of the new ImageViews in array Tiles[]
             Board.addView(Tiles[i]);
-            //Tiles[i].setImageResource(R.drawable.woodtile);
-            //currentBoard.holes[i].Location
         }
 
-        //Draw hole images on board
+        //Draw necessary hole images on the board
         for (int x : currentBoard.getallHoleLocations()) {
             Tiles[x].setImageResource(R.drawable.emptyhole);
             Tiles[x].setOnClickListener(new HoleImageClickListener(x));
         }
 
-        //Draw all 4 players marbles to the board
+        //Draw all 16 marbles on the board
         for (int x: currentBoard.player1.startingLocations)
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player1));
-
         for (int x: currentBoard.player2.startingLocations)
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player2));
-
         for (int x: currentBoard.player3.startingLocations)
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player3));
-
         for (int x: currentBoard.player4.startingLocations)
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player4));
     }
 
+    //Returns image of player's marble
     public int findMarbleColor(Player p)
     {
         switch(p.getColor()) {
@@ -84,7 +82,7 @@ public class GameActivity extends Activity {
         }
     }
 
-    //returns selectedmarble image of player color
+    //Returns image of player's selected marble
     public int findSelectedMarbleImage(Player p) {
         switch (p.getColor()) {
             case "blue":
@@ -100,35 +98,17 @@ public class GameActivity extends Activity {
         }
     }
 
-    //currentGame runs until game ends
-    private void currentGame(){
-        currentTurn();
-
-        //Loops until a player wins
-        //while(gameOver == false){
-
-
-        //}
-    }
-
-    private void currentTurn(){
-        playerTurn.setText("Drew Sucks!");
-        gameOver = true;
-    }
-
-
+    //Initiated at start up of activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         diceThrow = (TextView) findViewById(R.id.diceThrow);
         playerTurn = (TextView) findViewById(R.id.playerturn);
-        //Draw Game Board
-
         startGame();
-        currentGame();
     }
 
+    //Creates menu bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -136,6 +116,7 @@ public class GameActivity extends Activity {
         return true;
     }
 
+    //Adds listener for menu bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -151,34 +132,34 @@ public class GameActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void rollDice(View v){
-        if(!hasRolled) {
-            int roll;
-            currentBoard.setDiceRoll(); //rolls dice once
-            roll = currentBoard.getCurrentRoll(); //stores dice roll value
-            String stringRoll = Integer.toString(roll);
+    //Used when roll dice button is clicked by user
+    public void rollDice(View v) {
 
-            diceThrow.setText(stringRoll);
-            hasRolled = true;
-        }
-        else
+        //if user has not rolled for his/her turn yet
+        try {
+            if (!hasRolled) {
+                currentBoard.setDiceRoll(); //rolls the dice
+                roll = currentBoard.getCurrentRoll(); //stores value of roll
+                String stringRoll = Integer.toString(roll);
+
+                diceThrow.setText(stringRoll);
+                hasRolled = true;
+            }
+        }catch(Exception e)
         {
-            //fail to roll dice, send error message to user
+            //fail to roll dice (Safety net for program error and debugging purposes), send error message to user
         }
     }
 
-    public void move()
-    {
-
-    }
-    //Listens for clicks on holes
+    //Listens for hole images being clicked on
     private class HoleImageClickListener implements View.OnClickListener {
 
-        int location;
+        private int location;   //Holds hole location that has been clicked
 
         public HoleImageClickListener(int location) {
             this.location = location;
         }
+
 
         public void onClick(View view) {
                     try { //safety net
@@ -187,44 +168,55 @@ public class GameActivity extends Activity {
                         //else
                             //print error, please roll the dice first
                 } catch (Exception e) {
-                    //Spit error
+                    //fail to click on screen (Safety net for program error and debugging purposes), send error message to user
                 }
     }
+
+        //Communicates with GameBoard class make a move
         public void move() {
 
-            //Selects current players marble and stores it as well as the marble image
+            //Selects current players marble
             if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
                     || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
                     && (hasChosenMarble == false)) {
-                //currentBoard.setOldRequested(location);
+
                 hasChosenMarble = true;
-                chosenMarbleLocation = location;
+                marbleLocation = location; //Stores location of marble selected
                 savedCurrentMarbleImage = Tiles[location].getDrawable(); //Keeps current image saved
-                Tiles[location].setImageResource(findSelectedMarbleImage(currentBoard.current));
+                Tiles[location].setImageResource(findSelectedMarbleImage(currentBoard.current)); //Highlight the current marble
 
-                //Returns and Highlights movable areas
-                newchosenMarbleLocation = currentBoard.requestMove(location);
-                savedFutureImage = Tiles[newchosenMarbleLocation].getDrawable();
-                Tiles[newchosenMarbleLocation].setImageResource(R.drawable.placeholder);
-            } else if (hasChosenMarble && location == chosenMarbleLocation) {
+                //Shows available move
+                newMarbleLocation = currentBoard.requestMove(location);
+                savedFutureImage = Tiles[newMarbleLocation].getDrawable();
+                Tiles[newMarbleLocation].setImageResource(R.drawable.placeholder); //THIS WILL BE REPLACED WITH A GHOST MARBLE
+
+            //Moves the chosen marble to its new location
+            } else if (hasChosenMarble && location == marbleLocation) {
+
                 hasChosenMarble = false;
-                newchosenMarbleLocation = currentBoard.requestMove(location);
-                Tiles[chosenMarbleLocation].setImageResource(R.drawable.emptyhole);
-                Tiles[newchosenMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
+                newMarbleLocation = currentBoard.requestMove(location); //Returns location of available move, if any
+                Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
+                Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
 
-                //Changes to next player's turn
-                currentBoard.nextTurn();
-                hasRolled = false;
-                diceThrow.setText("Please roll");
+                currentBoard.nextTurn(); //Next player's turn
+                hasRolled = false;  //Reset dice
+                diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
 
+            //User wants to see all other options
+                //decided not to move the marble that is selected
             } else if (hasChosenMarble && (location == currentBoard.current.marble1 || location == currentBoard.current.marble2
                     || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
                     ) {
-                Tiles[chosenMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
-                Tiles[newchosenMarbleLocation].setImageDrawable(savedFutureImage);
+
+                Tiles[marbleLocation].setImageDrawable(savedCurrentMarbleImage);
+                Tiles[newMarbleLocation].setImageDrawable(savedFutureImage);
                 hasChosenMarble = false;
+
+                //Catches any other possible variation (should not ever be thrown, but just in case
             } else {
                 //Do nothing (to discuss if we should return error here)
+                    //I think this will be used if no move can be made
+                        //when method is added (isLegalMove())
             }
         }
     }
