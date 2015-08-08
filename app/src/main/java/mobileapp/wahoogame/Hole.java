@@ -1,8 +1,5 @@
 package mobileapp.wahoogame;
 
-/**
- * Created by Drew Demechko on 8/1/2015.
- */
 public class Hole {
 
     private boolean empty;

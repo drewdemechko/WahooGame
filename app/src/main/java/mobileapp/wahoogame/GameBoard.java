@@ -2,70 +2,42 @@ package mobileapp.wahoogame;
 
 import java.util.Random;
 
-/**
- * Created by Drew Demechko on 8/1/2015.
- */
+//Holds all GameBoard data
+    //the middle man for all classes
 public class GameBoard {
 
-    private int newRequestedLocation;
-    private int oldRequestedLocation;
     private Random diceRoll = new Random();
+    public Hole holes[];                        //Stores all hole objects
+    private int currentRoll;                    //Stores the value of the most recent dice roll
+    private boolean winnerFound = false;        //Checks if a player won the game
 
-    public Hole holes[]; //Total hole objects
-
-    private int allHoleLocations[]; //Stores all holes, makes it easier to draw to GameActivity
-    private int mainTrackLocations[]; //holes accessible by all, on main track []
-    private int homeLocations[];
-    private int startingLocations[];
-    private int currentRoll; //stores the value of the most recent dice roll
-
-    private boolean winnerFound = false;
-
+    //Holds a reference for each player
     Player player1;
     Player player2;
     Player player3;
     Player player4;
-
-    Player current; //To track current players turn
+    Player current; //Tracks data of the current player, whoever has the turn
 
     public GameBoard()
     {
-        //Initialize the constant locations of all holes
-        allHoleLocations = new int[]
-                {//start of all
-                 0,16,32,48, //starting (0)
-                 14,28,42,56,
-                 224,208,192,176,
-                 210,196,182,168, //end of starting (15)
-                 75, 76, 77, 78, 79, 80, 65, 50, 35, 20, 5, 6, 7, 8, 9, 24, //main track (16)
-                 39, 54, 69, 84, 85, 86, 87, 88, 89, 104, 119, 134, 149, 148, 147,
-                 146, 145, 144, 159, 174, 189, 204, 219, 218, 217, 216, 215, 200, 185,
-                 170, 155, 140, 139, 138, 137, 136, 135, 120, 105, 90, //end of main track (71)
-                 22,37,52,67, //home (72)
-                 118,117,116,115,
-                 202,187,172,157,
-                 106,107,108,109  //end of home (87)
-                };//end of all
+        holes = new Hole[88]; //Creates an array of hole objects on the board
 
-        holes = new Hole[88];
-
-        //Creates new hole objects
         for(int i = 0; i < holes.length; i++)
         {
             holes[i] = new Hole();
-            holes[i].setGridLocation(allHoleLocations[i]);
+            holes[i].setGridLocation(Hole.allHoleLocations[i]); //Set location of each hole on main grid
         }
 
-        //Creates all 4 players
+        //Creates 4 new players
         createPlayer("blue");
         createPlayer("yellow");
         createPlayer("red");
         createPlayer("green");
     }
 
+    //Allows next player to make a move
     public void nextTurn()
     {
-        //Determine who has the next turn
         if(current == null)
             current = player1;
         if(current == player1)
@@ -77,6 +49,8 @@ public class GameBoard {
         else if(current == player4)
             current = player1;
     }
+
+    //Creates a new Player object
     public void createPlayer(String c)
     {
         //Checks if there is space for new players
@@ -96,8 +70,7 @@ public class GameBoard {
                 }
 
                 //Set player's start/home positions
-                //player1.startingLocations = tempstart;
-                player1.homeLocations = temphome; //May be able to check if full for isGameOver()
+                player1.homeLocations = temphome;
                 player1.marble1 = tempstart[0];
                 player1.startingLocations[0] = player1.marble1;
                 player1.marble2 = tempstart[1];
@@ -108,7 +81,7 @@ public class GameBoard {
                 player1.startingLocations[3] = player1.marble4;
                 player1.setFirstHole(75);
                 player1.setLastHole(105);
-                current = player1; //Set players turn
+                current = player1; //Set player 1 to hold the first turn
             }
             else if(player2 == null)
             {
@@ -194,27 +167,13 @@ public class GameBoard {
         }catch(Exception e)
         {
             //Display error message that no more players are allowed to join!!
+                //Game is full
         }
     }
 
     public void clearBoard()
     {
         //Resets the data back to default values for new game
-    }
-
-    public void setMove(int startLoc, int endLoc)
-    {
-/*
-        if(requestMove())
-        {
-        //If move is legal, advance
-        }
-        else
-        {
-        //If move is illegal, return error message, we can do this with
-        // a try catch if we choose
-        }
-        */
     }
 
     public void GameOver()
@@ -257,16 +216,11 @@ public class GameBoard {
                 inHomeLocation = true;
         }
 
-        //Finds index location in allholesarray
-        //tempOldIndex = Hole.FindHole(tempOldLoc);
-        //tempNewIndex = Hole.FindHole(tempNewLoc);
-
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
             tempNewIndex = tempOldIndex + getCurrentRoll();
             tempNewHole = Hole.allHoleLocations[tempNewIndex];
-            //if(tempOldIndex + getCurrentRoll() == tempNewIndex)
-            //{
+
             //Find which marble the user wants to move
             //and set new position
             if (current.marble1 == marbleLocation) {
@@ -280,13 +234,8 @@ public class GameBoard {
             }
 
             completedTurn = true;
-            // }
-            // else
-            //{
-            //return error, could not move
-            // }
-
         }
+
         //If selected marble is in starting location
         else if (inStartingLocation) {
             if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
@@ -306,16 +255,10 @@ public class GameBoard {
                 }
 
                 completedTurn = true;
-                /*
-            } else {
-                //Return error, illegal move
-                completedTurn = false;
-            }
-            */
             }
         }
             if (completedTurn) {
-                //holes[tempNewIndex] = FILLHOLE
+                //holes[tempNewIndex].isEmpty() = false;
                 //holes[tempNewIndex] = SetCurrentPlayerColor
                 //holes[tempOldIndex] = SETEMPTY
                 //holes[tempOldIndex] = SetColor to "none"
@@ -324,45 +267,48 @@ public class GameBoard {
                 return marbleLocation; //WILL CHANGE THIS RETURN
                 //knockoff();
 
-                //This will be a pretty decent sized method because it will be
-                // checking for various conditions
             }
     }
 
+    //Returns all hole locations
     public int[] getallHoleLocations()
     {
-        return allHoleLocations;
+        return Hole.allHoleLocations;
     }
 
+    //Returns all main track locations
     public int[] getMainTrackLocations()
     {
-       return mainTrackLocations;
+       return Hole.mainTrackLocations;
     }
 
+    //Returns all home locations
     public int[] getHomeLocations()
     {
-        return homeLocations;
+        return Hole.homeLocations;
     }
 
+    //Returns all starting locations
     public int[] getStartingLocations()
     {
-        return startingLocations;
+        return Hole.startingLocations;
     }
 
+    //Set dice roll to a new random number (1-6)
     public void setDiceRoll()
     {
-        //currentRoll = diceRoll.nextInt(6)+1;
-        currentRoll = 6;
+        currentRoll = diceRoll.nextInt(6)+1;
+        //currentRoll = 6;
     }
     public int getCurrentRoll()
     {
         return currentRoll;
     }
 
+    //Checks if one player has all 4 home holes filled
+        //Will run after each player's turn
     public boolean isGameOver()
     {
-       //Checks if one player has all 4 home holes filled
-        // will run after each player turn
       if(holes[72].isEmpty() == false && holes[73].isEmpty() == false && holes[74].isEmpty() == false && holes[75].isEmpty() == false)
           winnerFound = true;
       else if(holes[76].isEmpty() == false && holes[77].isEmpty() == false && holes[78].isEmpty() == false && holes[79].isEmpty() == false)
@@ -371,30 +317,9 @@ public class GameBoard {
           winnerFound = true;
       else if(holes[84].isEmpty() == false && holes[85].isEmpty() == false && holes[86].isEmpty() == false && holes[87].isEmpty() == false)
           winnerFound = true;
-        else
+      else
           winnerFound = false;
 
-        return winnerFound;
-    }
-
-    //Value pulled from GameActivity actionlistener
-    public void setNewRequested(int r)
-    {
-        newRequestedLocation = r;
-    }
-
-    public int getNewRequestedLocation()
-    {
-        return newRequestedLocation;
-    }
-
-    public void setOldRequested(int r)
-    {
-        oldRequestedLocation = r;
-    }
-
-    public int getOldRequestedLocation()
-    {
-        return oldRequestedLocation;
+        return winnerFound; //Game is over
     }
 }

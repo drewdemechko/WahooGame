@@ -3,9 +3,6 @@ package mobileapp.wahoogame;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-/**
- * Created by Drew Demechko on 8/1/2015.
- */
 public class Player {
     private String color;
     String name;

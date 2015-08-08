@@ -10,7 +10,6 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 public class GameActivity extends Activity {
 
     //The skeleton class, used to display graphics only
