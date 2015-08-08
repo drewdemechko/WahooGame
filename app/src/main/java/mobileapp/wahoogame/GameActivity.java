@@ -14,18 +14,17 @@ import android.widget.TextView;
 public class GameActivity extends Activity {
 
     //The skeleton class, used to display graphics only
+        //will have very little data to keep track of
 
-
-    ImageView Tiles[] = new ImageView[225]; //Array of ImageVies displaying holes and marbles
-    private boolean pieceSelected = false;  //True if piece is selected
-    GameBoard currentBoard;                 //GameBoard object
-    private TextView diceThrow;             //TextView displaying number on dice
-    private TextView playerTurn;            //Display current player
-    private boolean hasRolled = false;
-    private boolean gameOver = false;       //True if game is over
-    private boolean choseMarble = false;
-    private boolean choseDestination = false;
+    ImageView Tiles[] = new ImageView[225];  //Array of ImageView objects to display the entire game board
+    GameBoard currentBoard;                  //Object that holds the data and can communicates with all of the others
+    private TextView diceThrow;              //Used to display the number rolled by the dice
+    private TextView playerTurn;             //Used to display which players turn it is
+    private boolean hasRolled = false;       //To check if the dice has been rolled for the current player
+    private boolean gameOver = false;
+    private boolean hasChosenMarble = false; //Checks if user has chosen a marble they want to see the moves of
     private int chosenMarbleLocation;
+    private int newchosenMarbleLocation;
     private Drawable savedCurrentMarbleImage; //Copies marble image so that it can redraw to a new location
     private Drawable savedFutureImage;
 
@@ -71,31 +70,34 @@ public class GameActivity extends Activity {
 
     public int findMarbleColor(Player p)
     {
-        if(p.getColor() == "blue")
-            return R.drawable.bluemarble;
-        else if(p.getColor() == "red")
-            return R.drawable.redmarble;
-        else if(p.getColor() == "yellow")
-            return R.drawable.yellowmarble;
-        else if(p.getColor() == "green")
-            return R.drawable.greenmarble;
-        else
-            return R.drawable.placeholder;
+        switch(p.getColor()) {
+            case "blue":
+                return R.drawable.bluemarble;
+            case "red":
+                return R.drawable.redmarble;
+            case "yellow":
+                return R.drawable.yellowmarble;
+            case "green":
+                return R.drawable.greenmarble;
+            default:
+                return R.drawable.placeholder;
+        }
     }
 
     //returns selectedmarble image of player color
-    public int findSelectedMarbleColor(Player p)
-    {
-        if(p.getColor() == "blue")
-            return R.drawable.selectedbluemarble;
-        else if(p.getColor() == "red")
-            return R.drawable.selectedredmarble;
-        else if(p.getColor() == "yellow")
-            return R.drawable.selectedyellowmarble;
-        else if(p.getColor() == "green")
-            return R.drawable.selectedgreenmarble;
-        else
-            return R.drawable.placeholder;
+    public int findSelectedMarbleImage(Player p) {
+        switch (p.getColor()) {
+            case "blue":
+                return R.drawable.selectedbluemarble;
+            case "red":
+                return R.drawable.selectedredmarble;
+            case "yellow":
+                return R.drawable.selectedyellowmarble;
+            case "green":
+                return R.drawable.selectedgreenmarble;
+            default:
+                return R.drawable.placeholder;
+        }
     }
 
     //currentGame runs until game ends
@@ -150,7 +152,7 @@ public class GameActivity extends Activity {
     }
 
     public void rollDice(View v){
-        if(hasRolled == false) {
+        if(!hasRolled) {
             int roll;
             currentBoard.setDiceRoll(); //rolls dice once
             roll = currentBoard.getCurrentRoll(); //stores dice roll value
@@ -189,80 +191,41 @@ public class GameActivity extends Activity {
                 }
     }
         public void move() {
-            int newchosenMarbleLocation = 0;
 
             //Selects current players marble and stores it as well as the marble image
             if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
                     || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
-                    && (choseMarble == false))
-            {
+                    && (hasChosenMarble == false)) {
                 //currentBoard.setOldRequested(location);
-                choseMarble = true;
+                hasChosenMarble = true;
                 chosenMarbleLocation = location;
                 savedCurrentMarbleImage = Tiles[location].getDrawable(); //Keeps current image saved
-                Tiles[location].setImageResource(findSelectedMarbleColor(currentBoard.current));
+                Tiles[location].setImageResource(findSelectedMarbleImage(currentBoard.current));
 
                 //Returns and Highlights movable areas
                 newchosenMarbleLocation = currentBoard.requestMove(location);
+                savedFutureImage = Tiles[newchosenMarbleLocation].getDrawable();
                 Tiles[newchosenMarbleLocation].setImageResource(R.drawable.placeholder);
-            }
-            else if (choseMarble && location == chosenMarbleLocation)
-            {
-                choseMarble = false;
+            } else if (hasChosenMarble && location == chosenMarbleLocation) {
+                hasChosenMarble = false;
                 newchosenMarbleLocation = currentBoard.requestMove(location);
                 Tiles[chosenMarbleLocation].setImageResource(R.drawable.emptyhole);
-                /////////savedFutureImage = Tiles[newchosenMarbleLocation]
-                //Tiles[newchosenMarbleLocation].setImageDrawable();
                 Tiles[newchosenMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
-            }
-            else if (choseMarble && (location == currentBoard.current.marble1 || location == currentBoard.current.marble2
+
+                //Changes to next player's turn
+                currentBoard.nextTurn();
+                hasRolled = false;
+                diceThrow.setText("Please roll");
+
+            } else if (hasChosenMarble && (location == currentBoard.current.marble1 || location == currentBoard.current.marble2
                     || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
-                    )
-            {
+                    ) {
                 Tiles[chosenMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
-                //Tiles[newchosenMarbleLocation].setImageDrawable(R.drawable.emptyhole);
-            }
-            else
-            {
+                Tiles[newchosenMarbleLocation].setImageDrawable(savedFutureImage);
+                hasChosenMarble = false;
+            } else {
                 //Do nothing (to discuss if we should return error here)
             }
-
-
-            /******
-            } else if (choseMarble == true && choseDestination == false) {
-                choseDestination = true;
-                currentBoard.setNewRequested(location);
-                //CHECKS IF ISLEGAL move
-                if(currentBoard.isLegalMove()) {
-                    //
-                    Tiles[location].setImageDrawable(savedImage);
-                    Tiles[chosenMarbleLocation].setImageResource(R.drawable.emptyhole);
-                    choseDestination = false;
-                    choseMarble = false;
-
-                    hasRolled = false;
-                    currentBoard.nextTurn();
-                }
-                else
-                {
-                    //Move not legal
-                    //print out error message and reset values to original
-                    return;
-                }
-        }
-             ******/
-
-            /*if(pieceSelected == false){
-                Tiles[location].setImageResource(R.drawable.placeholder);
-                pieceSelected = true;
-            }
-            else
-            {
-                //return error and try another location
-            }*/
-        }
-        public void waitOnMove() {
-
         }
     }
 }
