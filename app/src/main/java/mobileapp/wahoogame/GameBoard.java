@@ -204,8 +204,8 @@ public class GameBoard {
 
     public void setMove(int startLoc, int endLoc)
     {
-
-        if(isLegalMove())
+/*
+        if(requestMove())
         {
         //If move is legal, advance
         }
@@ -214,6 +214,7 @@ public class GameBoard {
         //If move is illegal, return error message, we can do this with
         // a try catch if we choose
         }
+        */
     }
 
     public void GameOver()
@@ -233,115 +234,99 @@ public class GameBoard {
         // back to starting position
     }
 
-    public boolean isLegalMove()
-    {
-        int tempOldLoc = getOldRequestedLocation();
-        int tempNewLoc = getNewRequestedLocation();
-        int tempOldIndex;
+    //Returns possible move
+    public int requestMove(int marbleLocation) {
+        //Finds index location in allholesarray
+        int tempOldIndex = Hole.FindHole(marbleLocation);
         int tempNewIndex;
+        int tempNewHole = 0;
+
         boolean inStartingLocation = false;
-        int startingCount = 0;
         boolean inHomeLocation = false;
-        int homeCount = 0;
         boolean completedTurn = false;
 
         //Check if marble being moved is in start
-        for(int x: Hole.startingLocations)
-        {
-            if(x == tempOldLoc) {
+        for (int x : Hole.startingLocations) {
+            if (x == marbleLocation)
                 inStartingLocation = true;
-                startingCount++;
-            }
         }
 
-        for(int x: Hole.homeLocations)
-        {
-            if(x == tempOldLoc)
-            {
+        //Check if marble being moved is in home
+        for (int x : Hole.homeLocations) {
+            if (x == marbleLocation)
                 inHomeLocation = true;
-                homeCount++;
-            }
         }
 
         //Finds index location in allholesarray
-        tempOldIndex = Hole.FindHole(tempOldLoc);
-        tempNewIndex = Hole.FindHole(tempNewLoc);
+        //tempOldIndex = Hole.FindHole(tempOldLoc);
+        //tempNewIndex = Hole.FindHole(tempNewLoc);
 
         //If selected marble is in home location or on main track
-        if(inStartingLocation == false)
-        {
-            if(tempOldIndex + getCurrentRoll() == tempNewIndex)
-            {
-                //Find which marble the user wants to move
-                if(current.marble1 == tempOldLoc)
-                {
-                    current.marble1 = tempNewLoc;
-                }
-                else if(current.marble2 == tempOldLoc)
-                {
-                    current.marble2 = tempNewLoc;
-                }
-                else if(current.marble3 == tempOldLoc)
-                {
-                    current.marble3 = tempNewLoc;
-                }
-                else if(current.marble4 == tempOldLoc)
-                {
-                    current.marble4 = tempNewLoc;
-                }
+        if (inStartingLocation == false) {
+            tempNewIndex = tempOldIndex + getCurrentRoll();
+            tempNewHole = Hole.allHoleLocations[tempNewIndex];
+            //if(tempOldIndex + getCurrentRoll() == tempNewIndex)
+            //{
+            //Find which marble the user wants to move
+            //and set new position
+            if (current.marble1 == marbleLocation) {
+                current.marble1 = tempNewHole;
+            } else if (current.marble2 == marbleLocation) {
+                current.marble2 = tempNewHole;
+            } else if (current.marble3 == marbleLocation) {
+                current.marble3 = tempNewHole;
+            } else if (current.marble4 == marbleLocation) {
+                current.marble4 = tempNewHole;
+            }
 
-                completedTurn = true;
-            }
-            else
-            {
-                //return error, could not move
-            }
+            completedTurn = true;
+            // }
+            // else
+            //{
+            //return error, could not move
+            // }
 
         }
         //If selected marble is in starting location
-        else if((getCurrentRoll() == 6 || getCurrentRoll() == 1) && tempNewLoc == current.getfirstHole() && inStartingLocation)
-        {
-        //Find which marble the user wants to move
-            if(current.marble1 == tempOldLoc)
-            {
-                current.marble1 = tempNewLoc;
-            }
-            else if(current.marble2 == tempOldLoc)
-            {
-                current.marble2 = tempNewLoc;
-            }
-            else if(current.marble3 == tempOldLoc)
-            {
-                current.marble3 = tempNewLoc;
-            }
-            else if(current.marble4 == tempOldLoc)
-            {
-                current.marble4 = tempNewLoc;
-            }
-            completedTurn = true;
-        }
-        else
-        {
-            //Return error, illegal move
-            completedTurn = false;
-        }
+        else if (inStartingLocation) {
+            if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
+                tempNewIndex = Hole.FindHole(current.getfirstHole());
+                tempNewHole = Hole.allHoleLocations[tempNewIndex];
+                //Find which marble the user wants to move
+                //and set new position
 
-        if(completedTurn)
-        {
-            //holes[tempNewIndex] = FILLHOLE
-            //holes[tempNewIndex] = SetCurrentPlayerColor
-            //holes[tempOldIndex] = SETEMPTY
-            //holes[tempOldIndex] = SetColor to "none"
-            return true;
-        }
-        else
-        {
-            return false;
-            //knockoff();
+                if (current.marble1 == marbleLocation) {
+                    current.marble1 = tempNewHole;
+                } else if (current.marble2 == marbleLocation) {
+                    current.marble2 = tempNewHole;
+                } else if (current.marble3 == marbleLocation) {
+                    current.marble3 = tempNewHole;
+                } else if (current.marble4 == marbleLocation) {
+                    current.marble4 = tempNewHole;
+                }
 
-            //This will be a pretty decent sized method because it will be
-            // checking for various conditions
+                completedTurn = true;
+                /*
+            } else {
+                //Return error, illegal move
+                completedTurn = false;
+            }
+            */
+            }
         }
+            if (completedTurn) {
+                //holes[tempNewIndex] = FILLHOLE
+                //holes[tempNewIndex] = SetCurrentPlayerColor
+                //holes[tempOldIndex] = SETEMPTY
+                //holes[tempOldIndex] = SetColor to "none"
+                return tempNewHole;
+            } else {
+                return marbleLocation; //WILL CHANGE THIS RETURN
+                //knockoff();
+
+                //This will be a pretty decent sized method because it will be
+                // checking for various conditions
+            }
     }
 
     public int[] getallHoleLocations()

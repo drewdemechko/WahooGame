@@ -26,8 +26,8 @@ public class GameActivity extends Activity {
     private boolean choseMarble = false;
     private boolean choseDestination = false;
     private int chosenMarbleLocation;
-    private Drawable savedImage; //Copies marble image so that it can redraw to a new location
-
+    private Drawable savedCurrentMarbleImage; //Copies marble image so that it can redraw to a new location
+    private Drawable savedFutureImage;
 
     //StartGame sets up new game
     public void startGame() {
@@ -188,19 +188,47 @@ public class GameActivity extends Activity {
                     //Spit error
                 }
     }
-        public void move()
-        {
+        public void move() {
+            int newchosenMarbleLocation = 0;
+
             //Selects current players marble and stores it as well as the marble image
             if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
-                    || location == currentBoard.current.marble3 || location == currentBoard.current.marble4) && (choseMarble == false)) {
-                currentBoard.setOldRequested(location);
+                    || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
+                    && (choseMarble == false))
+            {
+                //currentBoard.setOldRequested(location);
                 choseMarble = true;
                 chosenMarbleLocation = location;
-                savedImage = Tiles[location].getDrawable(); //Keeps current image saved
-                Tiles[location].setImageResource(R.drawable.placeholder);
-            } else if (location == chosenMarbleLocation) {
+                savedCurrentMarbleImage = Tiles[location].getDrawable(); //Keeps current image saved
+                Tiles[location].setImageResource(findSelectedMarbleColor(currentBoard.current));
+
+                //Returns and Highlights movable areas
+                newchosenMarbleLocation = currentBoard.requestMove(location);
+                Tiles[newchosenMarbleLocation].setImageResource(R.drawable.placeholder);
+            }
+            else if (choseMarble && location == chosenMarbleLocation)
+            {
                 choseMarble = false;
-                Tiles[location].setImageDrawable(savedImage);
+                newchosenMarbleLocation = currentBoard.requestMove(location);
+                Tiles[chosenMarbleLocation].setImageResource(R.drawable.emptyhole);
+                /////////savedFutureImage = Tiles[newchosenMarbleLocation]
+                //Tiles[newchosenMarbleLocation].setImageDrawable();
+                Tiles[newchosenMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
+            }
+            else if (choseMarble && (location == currentBoard.current.marble1 || location == currentBoard.current.marble2
+                    || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
+                    )
+            {
+                Tiles[chosenMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
+                //Tiles[newchosenMarbleLocation].setImageDrawable(R.drawable.emptyhole);
+            }
+            else
+            {
+                //Do nothing (to discuss if we should return error here)
+            }
+
+
+            /******
             } else if (choseMarble == true && choseDestination == false) {
                 choseDestination = true;
                 currentBoard.setNewRequested(location);
@@ -222,6 +250,7 @@ public class GameActivity extends Activity {
                     return;
                 }
         }
+             ******/
 
             /*if(pieceSelected == false){
                 Tiles[location].setImageResource(R.drawable.placeholder);
