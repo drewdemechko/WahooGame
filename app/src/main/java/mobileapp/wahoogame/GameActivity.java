@@ -97,40 +97,6 @@ public class GameActivity extends Activity {
         }
     }
 
-    //Initiated at start up of activity
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-        diceThrow = (TextView) findViewById(R.id.diceThrow);
-        playerTurn = (TextView) findViewById(R.id.playerturn);
-        startGame();
-    }
-
-    //Creates menu bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_game, menu);
-        return true;
-    }
-
-    //Adds listener for menu bar
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     //Used when roll dice button is clicked by user
     public void rollDice(View v) {
 
@@ -187,7 +153,7 @@ public class GameActivity extends Activity {
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
                 savedFutureImage = Tiles[newMarbleLocation].getDrawable();
-                Tiles[newMarbleLocation].setImageResource(R.drawable.placeholder); //THIS WILL BE REPLACED WITH A GHOST MARBLE
+                Tiles[newMarbleLocation].setImageResource(R.drawable.selectedhole); //THIS WILL BE REPLACED WITH A GHOST MARBLE
 
             //Moves the chosen marble to its new location
             } else if (hasChosenMarble && location == marbleLocation) {
@@ -218,6 +184,39 @@ public class GameActivity extends Activity {
                         //when method is added (isLegalMove())
             }
         }
+    }
+    //Initiated at start up of activity
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        diceThrow = (TextView) findViewById(R.id.diceThrow);
+        playerTurn = (TextView) findViewById(R.id.playerturn);
+        startGame();
+    }
+
+    //Creates menu bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_game, menu);
+        return true;
+    }
+
+    //Adds listener for menu bar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 
