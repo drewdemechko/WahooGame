@@ -233,6 +233,23 @@ public class GameBoard {
         // back to starting position
     }
 
+    public boolean canMove(){
+        int marblesInStart = 0;
+        for(int x: current.startingLocations)
+        {
+                if(holes[x].isEmpty() == false){
+                    marblesInStart++;
+                }
+        }
+
+        if(marblesInStart > 0) {
+            if (currentRoll == 1 || currentRoll == 6) {
+                return true;
+            }
+        }
+            return false;
+    }
+
     public boolean isLegalMove()
     {
         int tempOldLoc = getOldRequestedLocation();
@@ -254,6 +271,7 @@ public class GameBoard {
             }
         }
 
+        //check if marble being moved is home
         for(int x: Hole.homeLocations)
         {
             if(x == tempOldLoc)
@@ -366,8 +384,8 @@ public class GameBoard {
 
     public void setDiceRoll()
     {
-        //currentRoll = diceRoll.nextInt(6)+1;
-        currentRoll = 6;
+        currentRoll = diceRoll.nextInt(6)+1;
+        //currentRoll = 6;
     }
     public int getCurrentRoll()
     {
@@ -411,5 +429,28 @@ public class GameBoard {
     public int getOldRequestedLocation()
     {
         return oldRequestedLocation;
+    }
+
+    //Return location of destination hole
+    public int getDestinationLocation(int oldLocation){
+        //temp dest
+        int destination = 112;
+
+        //Check if marble being moved is in start
+        for(int x: current.startingLocations)
+        {
+            if(x == oldLocation) {
+
+                //check if 6 or 1
+                if(oldLocation == 6 || oldLocation == 1){
+
+                    destination = current.getfirstHole();
+
+                }
+            }
+        }
+
+
+        return destination = current.getfirstHole();
     }
 }

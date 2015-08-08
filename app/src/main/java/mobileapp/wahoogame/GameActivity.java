@@ -100,18 +100,18 @@ public class GameActivity extends Activity {
 
     //currentGame runs until game ends
     private void currentGame(){
-        currentTurn();
-
-        //Loops until a player wins
-        //while(gameOver == false){
 
 
-        //}
+
     }
 
-    private void currentTurn(){
-        playerTurn.setText("Drew Sucks!");
-        gameOver = true;
+    private void newTurn(){
+        //Set text to player's turn
+        currentBoard.nextTurn();
+        playerTurn.setText(currentBoard.current.getColor() + " Player's Turn");
+        hasRolled = false;
+
+
     }
 
 
@@ -124,7 +124,8 @@ public class GameActivity extends Activity {
         //Draw Game Board
 
         startGame();
-        currentGame();
+        playerTurn.setText(currentBoard.current.getColor() + "Player's Turn");
+
     }
 
     @Override
@@ -149,8 +150,9 @@ public class GameActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+   //Roll Dice Click Listener
     public void rollDice(View v){
-        if(hasRolled == false) {
+        if(!hasRolled) {
             int roll;
             currentBoard.setDiceRoll(); //rolls dice once
             roll = currentBoard.getCurrentRoll(); //stores dice roll value
@@ -158,12 +160,15 @@ public class GameActivity extends Activity {
 
             diceThrow.setText(stringRoll);
             hasRolled = true;
+
+            if(currentBoard.canMove() == false){
+                newTurn();
+            }
         }
-        else
-        {
-            //fail to roll dice, send error message to user
-        }
+
     }
+
+
 
     public void move()
     {
@@ -197,7 +202,15 @@ public class GameActivity extends Activity {
                 choseMarble = true;
                 chosenMarbleLocation = location;
                 savedImage = Tiles[location].getDrawable(); //Keeps current image saved
-                Tiles[location].setImageResource(R.drawable.placeholder);
+                Tiles[location].setImageResource(findSelectedMarbleColor(currentBoard.current));
+                //set selected hole image
+                if(currentBoard.getDestinationLocation(location) != 112){
+                    Tiles[currentBoard.getDestinationLocation(location)].setImageResource(R.drawable.selectedhole);
+                }
+
+
+
+
             } else if (location == chosenMarbleLocation) {
                 choseMarble = false;
                 Tiles[location].setImageDrawable(savedImage);
@@ -231,6 +244,11 @@ public class GameActivity extends Activity {
             {
                 //return error and try another location
             }*/
+        }
+
+        //set destination hole image to selected
+        public void setDestinationHole(){
+            //if()
         }
         public void waitOnMove() {
 
