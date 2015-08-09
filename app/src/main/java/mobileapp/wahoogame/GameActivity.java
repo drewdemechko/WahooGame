@@ -136,7 +136,7 @@ public class GameActivity extends Activity {
                     playerTurn.setText(currentBoard.findPlayer());
                     hasRolled = false;  //Reset dice
                     diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
-                }
+               }
 
             }
         }catch(Exception e)
@@ -187,15 +187,19 @@ public class GameActivity extends Activity {
             } else if (hasChosenMarble && location == marbleLocation) {
 
                 hasChosenMarble = false;
+                currentBoard.requestedMove();   //Changes hole properties
                 newMarbleLocation = currentBoard.requestMove(location); //Returns location of available move, if any
                 Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
                 Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
 
-                currentBoard.nextTurn(); //Next player's turn
-                playerTurn.setText(currentBoard.findPlayer());
                 hasRolled = false;  //Reset dice
-                diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
 
+                //Let's user roll until he/she does not roll a 1 or 6
+                if(currentBoard.getCurrentRoll() != 1 && currentBoard.getCurrentRoll() != 6) {
+                    currentBoard.nextTurn(); //Next player's turn
+                    playerTurn.setText(currentBoard.findPlayer());
+                    diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
+                }
             //User wants to see all other options
                 //decided not to move the marble that is selected
             } else if (hasChosenMarble && (location == currentBoard.current.marble1 || location == currentBoard.current.marble2

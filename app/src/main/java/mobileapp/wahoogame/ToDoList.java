@@ -8,9 +8,9 @@ DONE(only for starting locations)  Skip turn if no moves are available so add is
 We don't want to allow jumps
 ______________________________
 
-Need to update Gameboard request move class to manipulate hole object to setEmpty false, color, etc.
+DONE Need to update Gameboard request move class to manipulate hole object to setEmpty false, color, etc.
 
-Implement ability to roll again if 6 || 1 rolled
+DONE Implement ability to roll again if 6 || 1 rolled
 
 Add Knockoff() in GameBoard class
 

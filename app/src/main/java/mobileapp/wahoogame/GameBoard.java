@@ -10,6 +10,7 @@ public class GameBoard {
     public Hole holes[];                        //Stores all hole objects
     private int currentRoll;                    //Stores the value of the most recent dice roll
     private boolean winnerFound = false;        //Checks if a player won the game
+    private boolean requestedMove = false;
 
     //Holds a reference for each player
     Player player1;
@@ -197,8 +198,8 @@ public class GameBoard {
     public int requestMove(int marbleLocation) {
         //Finds index location in allholesarray
         int tempOldIndex = Hole.FindHole(marbleLocation);
-        int tempNewIndex;
-        int tempNewHole = 0;
+        int tempNewIndex = 112;
+        int tempNewHole = 112;
 
         boolean inStartingLocation = false;
         boolean inHomeLocation = false;
@@ -271,14 +272,18 @@ public class GameBoard {
             }
 
         }
+            if(requestedMove)
+            {
+                holes[tempNewIndex].setFull();
+                holes[tempNewIndex].setColor(current.getColor());
+                holes[tempOldIndex].setEmpty();
+                holes[tempOldIndex].setColor("none");
+                requestedMove = false;
+            }
             if (completedTurn) {
-                //holes[tempNewIndex].isEmpty() = false;
-                //holes[tempNewIndex] = SetCurrentPlayerColor
-                //holes[tempOldIndex] = SETEMPTY
-                //holes[tempOldIndex] = SetColor to "none"
                 return tempNewHole;
             } else {
-                return marbleLocation; //WILL CHANGE THIS RETURN
+                return 666; //WILL CHANGE THIS RETURN
                 //knockoff();
 
             }
@@ -346,10 +351,16 @@ public class GameBoard {
     {
         currentRoll = diceRoll.nextInt(6)+1;
         //currentRoll = 6;
+        //currentRoll = 1;
     }
     public int getCurrentRoll()
     {
         return currentRoll;
+    }
+
+    public void requestedMove()
+    {
+        requestedMove = true;
     }
 
     //Returns text for Player Turn
