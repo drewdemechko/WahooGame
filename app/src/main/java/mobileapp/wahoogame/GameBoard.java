@@ -189,10 +189,10 @@ public class GameBoard {
         clearBoard();
     }
 
-    public void knockOff(){
+    //public boolean knockOff(int n){
         //Communicates with the Hole class to empty the hole and send marble
         // back to starting position
-    }
+    //}
 
     //Returns possible move
     public int requestMove(int marbleLocation) {
@@ -219,14 +219,7 @@ public class GameBoard {
 
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
-            //tempNewIndex = tempOldIndex;
-            /*
-            //increment tempNewIndex and check if position contains marble of same color
-            for(int i = 0; i < getCurrentRoll(); i++){
-                tempNewIndex++;
 
-            }
-            */
             tempNewIndex = tempOldIndex + getCurrentRoll();
             tempNewHole = Hole.allHoleLocations[tempNewIndex];
 
@@ -242,6 +235,7 @@ public class GameBoard {
                 current.marble4 = tempNewHole;
             }
 
+            //Does not allow player to jump/land on its own marbles.
             for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
                 if(holes[i].getColor() == current.getColor())
                     return 666;

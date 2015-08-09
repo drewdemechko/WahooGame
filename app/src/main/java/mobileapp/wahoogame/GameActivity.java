@@ -180,8 +180,10 @@ public class GameActivity extends Activity {
 
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
-                savedFutureImage = Tiles[newMarbleLocation].getDrawable();
-                Tiles[newMarbleLocation].setImageResource(findGhostMarbleImage(currentBoard.current));
+                if(newMarbleLocation != 666) {
+                    savedFutureImage = Tiles[newMarbleLocation].getDrawable();
+                    Tiles[newMarbleLocation].setImageResource(findGhostMarbleImage(currentBoard.current));
+                }
 
             //Moves the chosen marble to its new location
             } else if (hasChosenMarble && location == marbleLocation) {
@@ -189,16 +191,19 @@ public class GameActivity extends Activity {
                 hasChosenMarble = false;
                 currentBoard.requestedMove();   //Changes hole properties
                 newMarbleLocation = currentBoard.requestMove(location); //Returns location of available move, if any
-                Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
-                Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
 
-                hasRolled = false;  //Reset dice
+                if(newMarbleLocation != 666) {
+                    Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
+                    Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
 
-                //Let's user roll until he/she does not roll a 1 or 6
-                if(currentBoard.getCurrentRoll() != 1 && currentBoard.getCurrentRoll() != 6) {
-                    currentBoard.nextTurn(); //Next player's turn
-                    playerTurn.setText(currentBoard.findPlayer());
-                    diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
+                    hasRolled = false;  //Reset dice
+
+                    //Let's user roll until he/she does not roll a 1 or 6
+                    if (currentBoard.getCurrentRoll() != 1 && currentBoard.getCurrentRoll() != 6) {
+                        currentBoard.nextTurn(); //Next player's turn
+                        playerTurn.setText(currentBoard.findPlayer());
+                        diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
+                    }
                 }
             //User wants to see all other options
                 //decided not to move the marble that is selected
