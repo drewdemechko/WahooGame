@@ -198,8 +198,8 @@ public class GameBoard {
     public int requestMove(int marbleLocation) {
         //Finds index location in allholesarray
         int tempOldIndex = Hole.FindHole(marbleLocation);
-        int tempNewIndex = 112;
-        int tempNewHole = 112;
+        int tempNewIndex = 666;
+        int tempNewHole = 666;
 
         boolean inStartingLocation = false;
         boolean inHomeLocation = false;
@@ -219,7 +219,7 @@ public class GameBoard {
 
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
-            tempNewIndex = tempOldIndex;
+            //tempNewIndex = tempOldIndex;
             /*
             //increment tempNewIndex and check if position contains marble of same color
             for(int i = 0; i < getCurrentRoll(); i++){
@@ -240,6 +240,11 @@ public class GameBoard {
                 current.marble3 = tempNewHole;
             } else if (current.marble4 == marbleLocation) {
                 current.marble4 = tempNewHole;
+            }
+
+            for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
+                if(holes[i].getColor() == current.getColor())
+                    return 666;
             }
 
             completedTurn = true;
@@ -274,11 +279,13 @@ public class GameBoard {
         }
             if(requestedMove)
             {
-                holes[tempNewIndex].setFull();
-                holes[tempNewIndex].setColor(current.getColor());
-                holes[tempOldIndex].setEmpty();
-                holes[tempOldIndex].setColor("none");
-                requestedMove = false;
+                //if(isLegal()) {
+                    holes[tempNewIndex].setFull();
+                    holes[tempNewIndex].setColor(current.getColor());
+                    holes[tempOldIndex].setEmpty();
+                    holes[tempOldIndex].setColor("none");
+                    requestedMove = false;
+               // }
             }
             if (completedTurn) {
                 return tempNewHole;
@@ -292,10 +299,12 @@ public class GameBoard {
     //Checks to see if a legal move is available
     public boolean isLegal(){
         boolean isLegal = true;
+
         boolean marble1 = true;
         boolean marble2 = true;
         boolean marble3 = true;
         boolean marble4 = true;
+
         //save current marble locations
         int loc1 = current.marble1;
         int loc2 = current.marble2;
@@ -317,6 +326,7 @@ public class GameBoard {
         //if no marble can move, isLegal is false
        if(!marble1 && !marble2 && !marble3 && !marble4){
             isLegal = false;}
+
 
 
         return isLegal;
