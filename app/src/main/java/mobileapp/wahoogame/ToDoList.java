@@ -1,9 +1,9 @@
 /*
-findGhostMarbleImage() that does the same as findSelectedMarbleImage
+DONE  findGhostMarbleImage() that does the same as findSelectedMarbleImage
 
-findPlayer() that returns the text at the top of screen
+DONE  findPlayer() that returns the text at the top of screen
 
-Skip turn if no moves are available so add isLegalMove() in GameBoard - that will check move() in GameBoard for all 4 marble locations
+DONE(only for starting locations)  Skip turn if no moves are available so add isLegalMove() in GameBoard - that will check move() in GameBoard for all 4 marble locations
 
 We don't want to allow jumps
 ______________________________

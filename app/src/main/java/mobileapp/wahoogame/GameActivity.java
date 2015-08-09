@@ -62,6 +62,9 @@ public class GameActivity extends Activity {
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player3));
         for (int x: currentBoard.player4.startingLocations)
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player4));
+
+        //Add player turn to text box
+        playerTurn.setText(currentBoard.findPlayer());
     }
 
     //Returns image of player's marble
@@ -85,16 +88,33 @@ public class GameActivity extends Activity {
     public int findSelectedMarbleImage(Player p) {
         switch (p.getColor()) {
             case "blue":
-                return R.drawable.selectedbluemarble;
+                return R.drawable.blueselectedmarble;
             case "red":
-                return R.drawable.selectedredmarble;
+                return R.drawable.redselectedmarble;
             case "yellow":
-                return R.drawable.selectedyellowmarble;
+                return R.drawable.yellowselectedmarble;
             case "green":
-                return R.drawable.selectedgreenmarble;
+                return R.drawable.greenselectedmarble;
             default:
                 return R.drawable.placeholder;
         }
+    }
+
+    //Returns image of player's ghost marble
+    public int findGhostMarbleImage(Player p){
+        switch (p.getColor()) {
+            case "blue":
+                return R.drawable.blueghostmarble;
+            case "red":
+                return R.drawable.redghostmarble;
+            case "yellow":
+                return R.drawable.yellowghostmarble;
+            case "green":
+                return R.drawable.greenghostmarble;
+            default:
+                return R.drawable.placeholder;
+        }
+
     }
 
     //Used when roll dice button is clicked by user
@@ -109,6 +129,15 @@ public class GameActivity extends Activity {
 
                 diceThrow.setText(stringRoll);
                 hasRolled = true;
+
+                //check if legal move is possible
+                if(!currentBoard.isLegal()){
+                    currentBoard.nextTurn(); //Next player's turn
+                    playerTurn.setText(currentBoard.findPlayer());
+                    hasRolled = false;  //Reset dice
+                    diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
+                }
+
             }
         }catch(Exception e)
         {
@@ -130,8 +159,7 @@ public class GameActivity extends Activity {
                     try { //safety net
                         if(hasRolled)
                             move();
-                        //else
-                            //print error, please roll the dice first
+
                 } catch (Exception e) {
                     //fail to click on screen (Safety net for program error and debugging purposes), send error message to user
                 }
@@ -153,7 +181,7 @@ public class GameActivity extends Activity {
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
                 savedFutureImage = Tiles[newMarbleLocation].getDrawable();
-                Tiles[newMarbleLocation].setImageResource(R.drawable.selectedhole); //THIS WILL BE REPLACED WITH A GHOST MARBLE
+                Tiles[newMarbleLocation].setImageResource(findGhostMarbleImage(currentBoard.current));
 
             //Moves the chosen marble to its new location
             } else if (hasChosenMarble && location == marbleLocation) {
@@ -164,6 +192,7 @@ public class GameActivity extends Activity {
                 Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
 
                 currentBoard.nextTurn(); //Next player's turn
+                playerTurn.setText(currentBoard.findPlayer());
                 hasRolled = false;  //Reset dice
                 diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
 

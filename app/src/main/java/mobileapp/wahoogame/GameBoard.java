@@ -218,6 +218,14 @@ public class GameBoard {
 
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
+            tempNewIndex = tempOldIndex;
+            /*
+            //increment tempNewIndex and check if position contains marble of same color
+            for(int i = 0; i < getCurrentRoll(); i++){
+                tempNewIndex++;
+
+            }
+            */
             tempNewIndex = tempOldIndex + getCurrentRoll();
             tempNewHole = Hole.allHoleLocations[tempNewIndex];
 
@@ -256,6 +264,12 @@ public class GameBoard {
 
                 completedTurn = true;
             }
+            else
+            {
+                tempNewHole = 666;
+                completedTurn = true;
+            }
+
         }
             if (completedTurn) {
                 //holes[tempNewIndex].isEmpty() = false;
@@ -268,6 +282,39 @@ public class GameBoard {
                 //knockoff();
 
             }
+    }
+
+    //Checks to see if a legal move is available
+    public boolean isLegal(){
+        boolean isLegal = true;
+        boolean marble1 = true;
+        boolean marble2 = true;
+        boolean marble3 = true;
+        boolean marble4 = true;
+        //save current marble locations
+        int loc1 = current.marble1;
+        int loc2 = current.marble2;
+        int loc3 = current.marble3;
+        int loc4 = current.marble4;
+
+        //check if each of current player's marbles can move
+        if(requestMove(current.marble1) == 666) {marble1 = false;}
+        if(requestMove(current.marble2) == 666) {marble2 = false;}
+        if(requestMove(current.marble3) == 666) {marble3 = false;}
+        if(requestMove(current.marble4) == 666) {marble4 = false;}
+
+        //Return marbles to original values
+        current.setMarble1(loc1);
+        current.setMarble2(loc2);
+        current.setMarble3(loc3);
+        current.setMarble4(loc4);
+
+        //if no marble can move, isLegal is false
+       if(!marble1 && !marble2 && !marble3 && !marble4){
+            isLegal = false;}
+
+
+        return isLegal;
     }
 
     //Returns all hole locations
@@ -303,6 +350,25 @@ public class GameBoard {
     public int getCurrentRoll()
     {
         return currentRoll;
+    }
+
+    //Returns text for Player Turn
+    public String findPlayer() {
+        String playerTurn = "";
+        if (current.getColor() == "red") {
+            playerTurn = "Red's Turn";
+        }
+        if (current.getColor() == "blue") {
+            playerTurn = "Blue's Turn";
+        }
+        if (current.getColor() == "yellow") {
+            playerTurn = "Yellow's Turn";
+        }
+        if (current.getColor() == "green") {
+            playerTurn = "Green's Turn";
+        }
+
+        return playerTurn;
     }
 
     //Checks if one player has all 4 home holes filled
