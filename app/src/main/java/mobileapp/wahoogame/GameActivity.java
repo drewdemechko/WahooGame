@@ -31,6 +31,8 @@ public class GameActivity extends Activity {
 
     private int roll;                       //Holds the value of current roll
 
+    Drawable KNOCKEDOFF;
+
     //Sets up new blank Wahoo board
     public void startGame() {
 
@@ -180,6 +182,8 @@ public class GameActivity extends Activity {
 
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
+                KNOCKEDOFF = Tiles[newMarbleLocation].getDrawable();
+
                 if(newMarbleLocation != 666) {
                     savedFutureImage = Tiles[newMarbleLocation].getDrawable();
                     Tiles[newMarbleLocation].setImageResource(findGhostMarbleImage(currentBoard.current));
@@ -193,6 +197,12 @@ public class GameActivity extends Activity {
                 newMarbleLocation = currentBoard.requestMove(location); //Returns location of available move, if any
 
                 if(newMarbleLocation != 666) {
+                    if(currentBoard.getKnockedOffMarble() == true)
+                    {
+                        currentBoard.setKnockedOffMarble(); //sets knockedOffMarble to false
+                        Tiles[currentBoard.KNOCKEDOFFNEWLOCATION].setImageDrawable(KNOCKEDOFF);
+                    }
+
                     Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
                     Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
 

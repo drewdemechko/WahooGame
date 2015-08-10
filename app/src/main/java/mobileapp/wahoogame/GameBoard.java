@@ -11,6 +11,9 @@ public class GameBoard {
     private int currentRoll;                    //Stores the value of the most recent dice roll
     private boolean winnerFound = false;        //Checks if a player won the game
     private boolean requestedMove = false;
+    private boolean knockedOffMarble = false;
+    public  Player KNOCKEDOFF;
+    public int KNOCKEDOFFNEWLOCATION;
 
     //Holds a reference for each player
     Player player1;
@@ -264,6 +267,7 @@ public class GameBoard {
 
                 completedTurn = true;
             }
+
             else
             {
                 tempNewHole = 666;
@@ -273,21 +277,192 @@ public class GameBoard {
         }
             if(requestedMove)
             {
-                //if(isLegal()) {
+                    //Checks if hole is already occupied by another marble
+                    if(holes[tempNewIndex].isEmpty() == false)
+                    {
+                        knockedOffMarble = true;
+                        knockOff(holes[tempNewIndex]); //knocks off marble and sends it back to a starting location
+                    }
+
                     holes[tempNewIndex].setFull();
                     holes[tempNewIndex].setColor(current.getColor());
                     holes[tempOldIndex].setEmpty();
                     holes[tempOldIndex].setColor("none");
                     requestedMove = false;
-               // }
             }
+
             if (completedTurn) {
                 return tempNewHole;
             } else {
                 return 666; //WILL CHANGE THIS RETURN
-                //knockoff();
-
             }
+    }
+
+    //
+    public void knockOff(Hole temphole)
+    {
+        if(player1.marble1 == temphole.getGridLocation() || player1.marble2 == temphole.getGridLocation() ||
+                player1.marble3 == temphole.getGridLocation() || player1.marble4 == temphole.getGridLocation())
+        {
+            KNOCKEDOFF = player1;
+            for(int i = 0; i < 4; i++)
+            {
+            if (holes[i].isEmpty())
+            {
+                if (player1.marble1 == temphole.getGridLocation())
+                {
+                    player1.marble1 = holes[i].getGridLocation();
+                    holes[i].setFull();
+                    holes[i].setColor(player1.getColor());
+                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                    break;
+                } else if (player1.marble2 == temphole.getGridLocation())
+                {
+                    player1.marble2 = holes[i].getGridLocation();
+                    holes[i].setFull();
+                    holes[i].setColor(player1.getColor());
+                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                    break;
+                } else if (player1.marble3 == temphole.getGridLocation())
+                {
+                    player1.marble3 = holes[i].getGridLocation();
+                    holes[i].setFull();
+                    holes[i].setColor(player1.getColor());
+                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                    break;
+                } else if (player1.marble4 == temphole.getGridLocation())
+                {
+                    player1.marble4 = holes[i].getGridLocation();
+                    holes[i].setFull();
+                    holes[i].setColor(player1.getColor());
+                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                    break;
+                }
+            }
+            }
+        }
+
+        else if(player2.marble1 == temphole.getGridLocation() || player2.marble2 == temphole.getGridLocation() ||
+                player2.marble3 == temphole.getGridLocation() || player2.marble4 == temphole.getGridLocation())
+        {
+            KNOCKEDOFF = player2;
+            for(int i = 4; i < 8; i++)
+            {
+                if (holes[i].isEmpty())
+                {
+                    if (player2.marble1 == temphole.getGridLocation())
+                    {
+                        player2.marble1 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player2.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player2.marble2 == temphole.getGridLocation())
+                    {
+                        player2.marble2 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player2.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player2.marble3 == temphole.getGridLocation())
+                    {
+                        player2.marble3 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player2.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player2.marble4 == temphole.getGridLocation())
+                    {
+                        player2.marble4 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player2.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    }
+                }
+            }
+        }
+
+        else if(player3.marble1 == temphole.getGridLocation() || player3.marble2 == temphole.getGridLocation() ||
+                player3.marble3 == temphole.getGridLocation() || player3.marble4 == temphole.getGridLocation())
+        {
+            KNOCKEDOFF = player3;
+            for(int i = 8; i < 12; i++)
+            {
+                if (holes[i].isEmpty())
+                {
+                    if (player3.marble1 == temphole.getGridLocation())
+                    {
+                        player3.marble1 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player3.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player3.marble2 == temphole.getGridLocation())
+                    {
+                        player3.marble2 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player3.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player3.marble3 == temphole.getGridLocation())
+                    {
+                        player3.marble3 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player3.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player3.marble4 == temphole.getGridLocation())
+                    {
+                        player3.marble4 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player3.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    }
+                }
+            }
+        }
+        else if(player4.marble1 == temphole.getGridLocation() || player4.marble2 == temphole.getGridLocation() ||
+                player4.marble3 == temphole.getGridLocation() || player4.marble4 == temphole.getGridLocation())
+        {
+            KNOCKEDOFF = player4;
+            for(int i = 12; i < 16; i++)
+            {
+                if (holes[i].isEmpty())
+                {
+                    if (player4.marble1 == temphole.getGridLocation())
+                    {
+                        player4.marble1 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player4.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player4.marble2 == temphole.getGridLocation())
+                    {
+                        player4.marble2 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player4.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player4.marble3 == temphole.getGridLocation())
+                    {
+                        player4.marble3 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player4.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    } else if (player4.marble4 == temphole.getGridLocation())
+                    {
+                        player4.marble4 = holes[i].getGridLocation();
+                        holes[i].setFull();
+                        holes[i].setColor(player4.getColor());
+                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     //Checks to see if a legal move is available
@@ -354,7 +529,7 @@ public class GameBoard {
     public void setDiceRoll()
     {
         currentRoll = diceRoll.nextInt(6)+1;
-        //currentRoll = 6;
+        //currentRoll = diceRoll.nextInt(2)+1;
         //currentRoll = 1;
     }
     public int getCurrentRoll()
@@ -402,5 +577,15 @@ public class GameBoard {
           winnerFound = false;
 
         return winnerFound; //Game is over
+    }
+
+    public void setKnockedOffMarble()
+    {
+        knockedOffMarble = false;
+    }
+
+    public boolean getKnockedOffMarble()
+    {
+        return knockedOffMarble;
     }
 }
