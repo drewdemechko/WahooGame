@@ -49,8 +49,24 @@ public class GameActivity extends Activity {
             Board.addView(Tiles[i]);
         }
 
+        int[] allLocations = {//start of all
+                0,16,32,48, //starting (0)
+                14,28,42,56,
+                224,208,192,176,
+                210,196,182,168, //end of starting (15)
+                75, 76, 77, 78, 79, 80, 65, 50, 35, 20, 5, 6, 7, 8, 9, 24, //main track (16)
+                39, 54, 69, 84, 85, 86, 87, 88, 89, 104, 119, 134, 149, 148, 147,
+                146, 145, 144, 159, 174, 189, 204, 219, 218, 217, 216, 215, 200, 185,
+                170, 155, 140, 139, 138, 137, 136, 135, 120, 105, 90, //end of main track (71)
+                22,37,52,67, //home (72)
+                118,117,116,115,
+                202,187,172,157,
+                106,107,108,109  //end of home (87)
+        };//end of all*/};
+
+
         //Draw necessary hole images on the board
-        for (int x : currentBoard.getallHoleLocations()) {
+        for (int x : allLocations) {
             Tiles[x].setImageResource(R.drawable.emptyhole);
             Tiles[x].setOnClickListener(new HoleImageClickListener(x));
         }
@@ -182,7 +198,7 @@ public class GameActivity extends Activity {
 
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
-                KNOCKEDOFF = Tiles[newMarbleLocation].getDrawable();
+                //KNOCKEDOFF = Tiles[newMarbleLocation].getDrawable();
 
                 if(newMarbleLocation != 666) {
                     savedFutureImage = Tiles[newMarbleLocation].getDrawable();
@@ -197,11 +213,11 @@ public class GameActivity extends Activity {
                 newMarbleLocation = currentBoard.requestMove(location); //Returns location of available move, if any
 
                 if(newMarbleLocation != 666) {
-                    if(currentBoard.getKnockedOffMarble() == true)
-                    {
-                        currentBoard.setKnockedOffMarble(); //sets knockedOffMarble to false
-                        Tiles[currentBoard.KNOCKEDOFFNEWLOCATION].setImageDrawable(KNOCKEDOFF);
-                    }
+                    //if(currentBoard.getKnockedOffMarble() == true)
+                    //{
+                      //  currentBoard.setKnockedOffMarble(); //sets knockedOffMarble to false
+                        //Tiles[currentBoard.KNOCKEDOFFNEWLOCATION].setImageDrawable(KNOCKEDOFF);
+                    //}
 
                     Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
                     Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);

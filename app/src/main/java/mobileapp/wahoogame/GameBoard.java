@@ -69,22 +69,24 @@ public class GameBoard {
                     //Define starting/home positions
                     holes[i].setFull();
                     holes[i].setPlayer(player1);
-                    tempstart[i] = holes[i].getGridLocation();
-                    temphome[i] = holes[i+84].getGridLocation();
+                    //tempstart[i] = holes[i].getGridLocation();
+                    //temphome[i] = holes[i+84].getGridLocation();
                 }
 
                 //Set player's start/home positions
-                player1.homeLocations = temphome;
-                player1.marble1 = tempstart[0];
+                player1.marble1 = 0;
                 player1.startingLocations[0] = player1.marble1;
-                player1.marble2 = tempstart[1];
+                player1.marble2 = 16;
                 player1.startingLocations[1] = player1.marble2;
-                player1.marble3 = tempstart[2];
+                player1.marble3 = 32;
                 player1.startingLocations[2] = player1.marble3;
-                player1.marble4 = tempstart[3];
+                player1.marble4 = 48;
                 player1.startingLocations[3] = player1.marble4;
+                player1.holes = new int[]{75,76,77,78,79,80,65,50,35,20,5,6,7,8,9,24,39,54,69,84,85,86,87,88,89,
+                                            104,119,134,149,148,147,146,145,144,159,174,189,204,219,218,
+                                            217,216,215,200,185,170,155,140,139,138,137, 136, 135, 120, 105,
+                                            106, 107, 108, 109};
                 player1.setFirstHole(75);
-                player1.setLastHole(105);
                 current = player1; //Set player 1 to hold the first turn
             }
             else if(player2 == null)
@@ -96,23 +98,25 @@ public class GameBoard {
                     //Define starting/home positions
                     holes[i].setFull();
                     holes[i].setPlayer(player2);
-                    tempstart[i] = holes[i].getGridLocation();
-                    temphome[i] = holes[i+68].getGridLocation();
+                    //tempstart[i] = holes[i].getGridLocation();
+                    //temphome[i] = holes[i+68].getGridLocation();
                 }
 
                 //Set player's start/home positions
                 //player2.startingLocations = tempstart;
-                player2.homeLocations = temphome; //May be able to check if full for isGameOver()
-                player2.marble1 = tempstart[4];
+                player2.marble1 = 14;
                 player2.startingLocations[0] = player2.marble1;
-                player2.marble2 = tempstart[5];
+                player2.marble2 = 28;
                 player2.startingLocations[1] = player2.marble2;
-                player2.marble3 = tempstart[6];
+                player2.marble3 = 42;
                 player2.startingLocations[2] = player2.marble3;
-                player2.marble4 = tempstart[7];
+                player2.marble4 = 56;
                 player2.startingLocations[3] = player2.marble4;
+                player2.holes = new int[]{9,24,39,54,69,84,85,86,87,88,89,104,119,134,149,148,147,146,145,144,159,
+                                            174,189,204,219,218,217,216,215,200,185,170,155,140,139,138,
+                                            137,136,135,120,105,90,75,76,77,78,79,80,65,50,35,20,5,6,7,
+                                            22,37,52,67};
                 player2.setFirstHole(9);
-                player2.setLastHole(7);
             }
             else if(player3 == null)
             {
@@ -123,23 +127,26 @@ public class GameBoard {
                     //Define starting/home positions
                     holes[i].setFull();
                     holes[i].setPlayer(player3);
-                    tempstart[i] = holes[i].getGridLocation();
-                    temphome[i] = holes[i+68].getGridLocation();
+                    //tempstart[i] = holes[i].getGridLocation();
+                    //temphome[i] = holes[i+68].getGridLocation();
                 }
 
                 //Set player's start/home positions
                 //player3.startingLocations = tempstart;
-                player3.homeLocations = temphome; //May be able to check if full for isGameOver()
-                player3.marble1 = tempstart[8];
+                player3.marble1 = 224;
                 player3.startingLocations[0] = player3.marble1;
-                player3.marble2 = tempstart[9];
+                player3.marble2 = 208;
                 player3.startingLocations[1] = player3.marble2;
-                player3.marble3 = tempstart[10];
+                player3.marble3 = 192;
                 player3.startingLocations[2] = player3.marble3;
-                player3.marble4 = tempstart[11];
+                player3.marble4 = 176;
                 player3.startingLocations[3] = player3.marble4;
+                player3.holes = new int[]{149,148,147,146,145,144,159,174,189,204,219,218,217,216,215,200,185,170,155,
+                                                140,139,138,137,136,135,120,105,90,75,76,77,78,79,80,
+                                                65,50,35,20,5,6,7,8,9,24,39,54,69,84,85,86,87,88,89,
+                                                104,119,
+                                                118,117,116,115};
                 player3.setFirstHole(149);
-                player3.setLastHole(119);
             }
             else if(player4 == null)
             {
@@ -150,23 +157,26 @@ public class GameBoard {
                     //Define starting/home positions
                     holes[i].setFull();
                     holes[i].setPlayer(player4);
-                    tempstart[i] = holes[i].getGridLocation();
-                    temphome[i] = holes[i+68].getGridLocation();
+                    //tempstart[i] = holes[i].getGridLocation();
+                    //temphome[i] = holes[i+68].getGridLocation();
                 }
 
                 //Set player's start/home positions
                 //player4.startingLocations = tempstart;
-                player4.homeLocations = temphome; //May be able to check if full for isGameOver()
-                player4.marble1 = tempstart[12];
+                player4.marble1 = 210;
                 player4.startingLocations[0] = player4.marble1;
-                player4.marble2 = tempstart[13];
+                player4.marble2 = 196;
                 player4.startingLocations[1] = player4.marble2;
-                player4.marble3 = tempstart[14];
+                player4.marble3 = 182;
                 player4.startingLocations[2] = player4.marble3;
-                player4.marble4 = tempstart[15];
+                player4.marble4 = 168;
                 player4.startingLocations[3] = player4.marble4;
+                player4.holes = new int[]{215,200,185,170,155,
+                        140,139,138,137,136,135,120,105,90,75,76,77,78,79,80,
+                        65,50,35,20,5,6,7,8,9,24,39,54,69,84,85,86,87,88,89,
+                        104,119,134,149,148,147,146,145,144,159,174,189,204,219,218,217,
+                        202,187,172,157};
                 player4.setFirstHole(215);
-                player4.setLastHole(217);
             }
         }catch(Exception e)
         {
@@ -200,7 +210,8 @@ public class GameBoard {
     //Returns possible move
     public int requestMove(int marbleLocation) {
         //Finds index location in allholesarray
-        int tempOldIndex = Hole.FindHole(marbleLocation);
+        //int tempOldIndex = Hole.FindHole(marbleLocation);
+        int tempOldIndex = current.FindHole(marbleLocation);
         int tempNewIndex = 666;
         int tempNewHole = 666;
 
@@ -224,7 +235,8 @@ public class GameBoard {
         if (inStartingLocation == false) {
 
             tempNewIndex = tempOldIndex + getCurrentRoll();
-            tempNewHole = Hole.allHoleLocations[tempNewIndex];
+            //tempNewHole = Hole.allHoleLocations[tempNewIndex];
+            tempNewHole = current.holes[tempNewIndex];
 
             //Find which marble the user wants to move
             //and set new position
@@ -239,10 +251,10 @@ public class GameBoard {
             }
 
             //Does not allow player to jump/land on its own marbles.
-            for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
-                if(holes[i].getColor() == current.getColor())
-                    return 666;
-            }
+           // for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
+               // if(holes[i].getColor() == current.getColor())
+                   // return 666;
+            //}
 
             completedTurn = true;
         }
@@ -250,8 +262,10 @@ public class GameBoard {
         //If selected marble is in starting location
         else if (inStartingLocation) {
             if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
-                tempNewIndex = Hole.FindHole(current.getfirstHole());
-                tempNewHole = Hole.allHoleLocations[tempNewIndex];
+                //tempNewIndex = Hole.FindHole(current.getfirstHole());
+                //tempNewHole = Hole.allHoleLocations[tempNewIndex];
+                tempNewIndex = Hole.FindHole(current.holes[0]);
+                tempNewHole = current.holes[0];
                 //Find which marble the user wants to move
                 //and set new position
 
@@ -281,13 +295,13 @@ public class GameBoard {
                     if(holes[tempNewIndex].isEmpty() == false)
                     {
                         knockedOffMarble = true;
-                        knockOff(holes[tempNewIndex]); //knocks off marble and sends it back to a starting location
+                        //knockOff(holes[tempNewIndex]); //knocks off marble and sends it back to a starting location
                     }
 
-                    holes[tempNewIndex].setFull();
-                    holes[tempNewIndex].setColor(current.getColor());
-                    holes[tempOldIndex].setEmpty();
-                    holes[tempOldIndex].setColor("none");
+                    holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
+                    holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
+                    holes[Hole.FindHole(current.holes[tempOldIndex])].setEmpty();
+                    holes[Hole.FindHole(current.holes[tempOldIndex])].setColor("none");
                     requestedMove = false;
             }
 
@@ -299,7 +313,7 @@ public class GameBoard {
     }
 
     //
-    public void knockOff(Hole temphole)
+    /*public void knockOff(Hole temphole)
     {
         if(player1.marble1 == temphole.getGridLocation() || player1.marble2 == temphole.getGridLocation() ||
                 player1.marble3 == temphole.getGridLocation() || player1.marble4 == temphole.getGridLocation())
@@ -463,7 +477,7 @@ public class GameBoard {
                 }
             }
         }
-    }
+    }*/
 
     //Checks to see if a legal move is available
     public boolean isLegal(){
@@ -502,10 +516,10 @@ public class GameBoard {
     }
 
     //Returns all hole locations
-    public int[] getallHoleLocations()
-    {
-        return Hole.allHoleLocations;
-    }
+   // public int[] getallHoleLocations()
+    //{
+      //  return Hole.allHoleLocations;
+    //}
 
     //Returns all main track locations
     public int[] getMainTrackLocations()
@@ -530,7 +544,7 @@ public class GameBoard {
     {
         currentRoll = diceRoll.nextInt(6)+1;
         //currentRoll = diceRoll.nextInt(2)+1;
-        //currentRoll = 1;
+        //currentRoll = 6;
     }
     public int getCurrentRoll()
     {

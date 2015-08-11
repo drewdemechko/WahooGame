@@ -12,14 +12,12 @@ public class Player {
     int marble4;
 
     private Drawable selectedMarble;
-
-    int[] homeLocations = new int[4];
+    int[] holes;
     int[] startingLocations = new int[4];
     int[] currentLocations = new int[4];
 
     //Where player moves when out of starting location
     private int firstHole;
-    private int lastHole;
 
     //May need this later, not sure yet
     private boolean isAlive = false;
@@ -47,15 +45,6 @@ public class Player {
        firstHole = loc;
     }
 
-    public int getLastHole()
-    {
-        return lastHole;
-    }
-
-    public void setLastHole(int loc)
-    {
-        lastHole = loc;
-    }
 
     public int[] getCurrentLocations()
     {
@@ -97,4 +86,16 @@ public class Player {
     //Not sure if we will need this one because the players shouldn't be
     // able to change colors mid game
     /*public void setColor(String c)*/
+    //Finds a hole by gridvalue and returns the index in allHoleLocations
+
+    public int FindHole(int n) //pass gridlocation
+    {
+        for(int i = 0; i < holes.length; i++)
+        {
+            if(holes[i] == n)
+                return i;
+        }
+        //print some error message
+        return 0;
+    }
 }

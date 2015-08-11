@@ -112,10 +112,10 @@ public class Hole {
         }
     }
 
-    public int getGridLocation()
-    {
-        return gridLocation;
-    }
+    //public int getGridLocation()
+   // {
+      //  return gridLocation;
+    //}
 
     public boolean isHome()
     {
