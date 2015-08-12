@@ -213,11 +213,12 @@ public class GameActivity extends Activity {
                 newMarbleLocation = currentBoard.requestMove(location); //Returns location of available move, if any
 
                 if(newMarbleLocation != 666) {
-                    //if(currentBoard.getKnockedOffMarble() == true)
-                    //{
-                      //  currentBoard.setKnockedOffMarble(); //sets knockedOffMarble to false
-                        //Tiles[currentBoard.KNOCKEDOFFNEWLOCATION].setImageDrawable(KNOCKEDOFF);
-                    //}
+
+                    if(currentBoard.KNOCKEDOFFTRUE == true)
+                    {
+                        Tiles[currentBoard.KNOCKEDOFFNEWLOCATION].setImageResource(findMarbleColor(currentBoard.KNOCKEDOFF));
+                        currentBoard.KNOCKEDOFFTRUE = false;
+                    }
 
                     Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
                     Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);

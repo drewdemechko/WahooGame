@@ -11,9 +11,10 @@ public class GameBoard {
     private int currentRoll;                    //Stores the value of the most recent dice roll
     private boolean winnerFound = false;        //Checks if a player won the game
     private boolean requestedMove = false;
-    private boolean knockedOffMarble = false;
-    public  Player KNOCKEDOFF;
-    public int KNOCKEDOFFNEWLOCATION;
+
+    Player KNOCKEDOFF;
+    int KNOCKEDOFFNEWLOCATION;
+    boolean KNOCKEDOFFTRUE = false;
 
     //Holds a reference for each player
     Player player1;
@@ -29,6 +30,7 @@ public class GameBoard {
         for(int i = 0; i < holes.length; i++)
         {
             holes[i] = new Hole();
+            //holes[i].setEmpty();
             holes[i].setGridLocation(Hole.allHoleLocations[i]); //Set location of each hole on main grid
         }
 
@@ -233,7 +235,6 @@ public class GameBoard {
 
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
-
             tempNewIndex = tempOldIndex + getCurrentRoll();
             //tempNewHole = Hole.allHoleLocations[tempNewIndex];
             tempNewHole = current.holes[tempNewIndex];
@@ -251,10 +252,10 @@ public class GameBoard {
             }
 
             //Does not allow player to jump/land on its own marbles.
-           // for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
-               // if(holes[i].getColor() == current.getColor())
-                   // return 666;
-            //}
+            for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
+                if(holes[Hole.FindHole(current.holes[i])].getColor() == current.getColor())
+                    return 666;
+            }
 
             completedTurn = true;
         }
@@ -262,9 +263,9 @@ public class GameBoard {
         //If selected marble is in starting location
         else if (inStartingLocation) {
             if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
-                //tempNewIndex = Hole.FindHole(current.getfirstHole());
-                //tempNewHole = Hole.allHoleLocations[tempNewIndex];
-                tempNewIndex = Hole.FindHole(current.holes[0]);
+                //if(current.marble1 == marbleLocation)
+                    //holes[Hole.FindHole(marbleLocation)].setColor("none");
+                tempNewIndex = 0;//Hole.FindHole(current.holes[0]);
                 tempNewHole = current.holes[0];
                 //Find which marble the user wants to move
                 //and set new position
@@ -289,20 +290,26 @@ public class GameBoard {
             }
 
         }
-            if(requestedMove)
-            {
-                    //Checks if hole is already occupied by another marble
-                    if(holes[tempNewIndex].isEmpty() == false)
-                    {
-                        knockedOffMarble = true;
-                        //knockOff(holes[tempNewIndex]); //knocks off marble and sends it back to a starting location
-                    }
+            //holes[Hole.FindHole(marbleLocation)].setEmpty();
 
-                    holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
-                    holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
-                    holes[Hole.FindHole(current.holes[tempOldIndex])].setEmpty();
-                    holes[Hole.FindHole(current.holes[tempOldIndex])].setColor("none");
-                    requestedMove = false;
+            if(requestedMove && holes[Hole.FindHole(current.holes[tempNewIndex])].isEmpty())
+            {
+                holes[Hole.FindHole(marbleLocation)].setEmpty();
+                //Checks if hole is already occupied by another marble
+                //holes[Hole.FindHole(current.holes[tempOldIndex])].setEmpty();
+                //holes[Hole.FindHole(current.holes[tempOldIndex])].setColor("none");
+                holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
+                holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
+                requestedMove = false;
+            }
+            else if(requestedMove && holes[Hole.FindHole(current.holes[tempNewIndex])].isEmpty() == false)
+            {
+              knockOff(holes[Hole.FindHole(current.holes[tempNewIndex])], current.holes[tempNewIndex]);
+                KNOCKEDOFFTRUE = true;
+                holes[Hole.FindHole(marbleLocation)].setEmpty(); //TEST TOMORROW
+                holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
+                holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
+              requestedMove = false;
             }
 
             if (completedTurn) {
@@ -312,172 +319,120 @@ public class GameBoard {
             }
     }
 
-    //
-    /*public void knockOff(Hole temphole)
+    public void knockOff(Hole tempHole, int loc)
     {
-        if(player1.marble1 == temphole.getGridLocation() || player1.marble2 == temphole.getGridLocation() ||
-                player1.marble3 == temphole.getGridLocation() || player1.marble4 == temphole.getGridLocation())
+        if(tempHole.getColor() != current.getColor())
         {
-            KNOCKEDOFF = player1;
-            for(int i = 0; i < 4; i++)
+            if(player1.marble1 == loc || player1.marble2 == loc || player1.marble3 == loc || player1.marble4 == loc)
             {
-            if (holes[i].isEmpty())
-            {
-                if (player1.marble1 == temphole.getGridLocation())
-                {
-                    player1.marble1 = holes[i].getGridLocation();
-                    holes[i].setFull();
-                    holes[i].setColor(player1.getColor());
-                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                    break;
-                } else if (player1.marble2 == temphole.getGridLocation())
-                {
-                    player1.marble2 = holes[i].getGridLocation();
-                    holes[i].setFull();
-                    holes[i].setColor(player1.getColor());
-                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                    break;
-                } else if (player1.marble3 == temphole.getGridLocation())
-                {
-                    player1.marble3 = holes[i].getGridLocation();
-                    holes[i].setFull();
-                    holes[i].setColor(player1.getColor());
-                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                    break;
-                } else if (player1.marble4 == temphole.getGridLocation())
-                {
-                    player1.marble4 = holes[i].getGridLocation();
-                    holes[i].setFull();
-                    holes[i].setColor(player1.getColor());
-                    KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                    break;
+                KNOCKEDOFF = player1;
+                for(int i = 0; i < 4; i++) {
+                    if(holes[Hole.FindHole(player1.startingLocations[i])].isEmpty()) {
+                        if (player1.marble1 == loc) {
+                            player1.marble1 = player1.startingLocations[i];
+                        }
+                        else if (player1.marble2 == loc)
+                        {
+                            player1.marble2 = player1.startingLocations[i];
+                        }
+                        else if(player1.marble3 == loc)
+                        {
+                            player1.marble3 = player1.startingLocations[i];
+                        }
+                        else if(player1.marble4 == loc)
+                        {
+                            player1.marble4 = player1.startingLocations[i];
+                        }
+                        KNOCKEDOFFNEWLOCATION = player1.startingLocations[i];
+                        holes[Hole.FindHole(player1.startingLocations[i])].setFull();
+                        holes[Hole.FindHole(player1.startingLocations[i])].setColor(player1.getColor());
+                        break;
+                    }
                 }
             }
-            }
-        }
-
-        else if(player2.marble1 == temphole.getGridLocation() || player2.marble2 == temphole.getGridLocation() ||
-                player2.marble3 == temphole.getGridLocation() || player2.marble4 == temphole.getGridLocation())
-        {
-            KNOCKEDOFF = player2;
-            for(int i = 4; i < 8; i++)
+            else if(player2.marble1 == loc || player2.marble2 == loc || player2.marble3 == loc || player2.marble4 == loc)
             {
-                if (holes[i].isEmpty())
-                {
-                    if (player2.marble1 == temphole.getGridLocation())
-                    {
-                        player2.marble1 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player2.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                KNOCKEDOFF = player2;
+                for(int i = 0; i < 4; i++) {
+                    if(holes[Hole.FindHole(player2.startingLocations[i])].isEmpty()) {
+                        if (player2.marble1 == loc) {
+                            player2.marble1 = player2.startingLocations[i];
+                        }
+                        else if (player2.marble2 == loc)
+                        {
+                            player2.marble2 = player2.startingLocations[i];
+                        }
+                        else if(player2.marble3 == loc)
+                        {
+                            player2.marble3 = player2.startingLocations[i];
+                        }
+                        else if(player2.marble4 == loc)
+                        {
+                            player2.marble4 = player2.startingLocations[i];
+                        }
+                        KNOCKEDOFFNEWLOCATION = player2.startingLocations[i];
+                        holes[Hole.FindHole(player2.startingLocations[i])].setFull();
+                        holes[Hole.FindHole(player2.startingLocations[i])].setColor(player2.getColor());
                         break;
-                    } else if (player2.marble2 == temphole.getGridLocation())
-                    {
-                        player2.marble2 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player2.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                    }
+                }
+            }
+            else if(player3.marble1 == loc || player3.marble2 == loc || player3.marble3 == loc || player3.marble4 == loc)
+            {
+                KNOCKEDOFF = player3;
+                for(int i = 0; i < 4; i++) {
+                    if(holes[Hole.FindHole(player3.startingLocations[i])].isEmpty()) {
+                        if (player3.marble1 == loc) {
+                            player3.marble1 = player3.startingLocations[i];
+                        }
+                        else if (player3.marble2 == loc)
+                        {
+                            player3.marble2 = player3.startingLocations[i];
+                        }
+                        else if(player3.marble3 == loc)
+                        {
+                            player3.marble3 = player3.startingLocations[i];
+                        }
+                        else if(player3.marble4 == loc)
+                        {
+                            player3.marble4 = player3.startingLocations[i];
+                        }
+                        KNOCKEDOFFNEWLOCATION = player3.startingLocations[i];
+                        holes[Hole.FindHole(player3.startingLocations[i])].setFull();
+                        holes[Hole.FindHole(player3.startingLocations[i])].setColor(player3.getColor());
                         break;
-                    } else if (player2.marble3 == temphole.getGridLocation())
-                    {
-                        player2.marble3 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player2.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player2.marble4 == temphole.getGridLocation())
-                    {
-                        player2.marble4 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player2.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
+                    }
+                }
+            }
+            else if(player4.marble1 == loc || player4.marble2 == loc || player4.marble3 == loc || player4.marble4 == loc)
+            {
+                KNOCKEDOFF = player4;
+                for(int i = 0; i < 4; i++) {
+                    if(holes[Hole.FindHole(player4.startingLocations[i])].isEmpty()) {
+                        if (player4.marble1 == loc) {
+                            player4.marble1 = player4.startingLocations[i];
+                        }
+                        else if (player4.marble2 == loc)
+                        {
+                            player4.marble2 = player4.startingLocations[i];
+                        }
+                        else if(player4.marble3 == loc)
+                        {
+                            player4.marble3 = player4.startingLocations[i];
+                        }
+                        else if(player4.marble4 == loc)
+                        {
+                            player4.marble4 = player4.startingLocations[i];
+                        }
+                        KNOCKEDOFFNEWLOCATION = player4.startingLocations[i];
+                        holes[Hole.FindHole(player4.startingLocations[i])].setFull();
+                        holes[Hole.FindHole(player4.startingLocations[i])].setColor(player4.getColor());
                         break;
                     }
                 }
             }
         }
-
-        else if(player3.marble1 == temphole.getGridLocation() || player3.marble2 == temphole.getGridLocation() ||
-                player3.marble3 == temphole.getGridLocation() || player3.marble4 == temphole.getGridLocation())
-        {
-            KNOCKEDOFF = player3;
-            for(int i = 8; i < 12; i++)
-            {
-                if (holes[i].isEmpty())
-                {
-                    if (player3.marble1 == temphole.getGridLocation())
-                    {
-                        player3.marble1 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player3.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player3.marble2 == temphole.getGridLocation())
-                    {
-                        player3.marble2 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player3.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player3.marble3 == temphole.getGridLocation())
-                    {
-                        player3.marble3 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player3.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player3.marble4 == temphole.getGridLocation())
-                    {
-                        player3.marble4 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player3.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    }
-                }
-            }
-        }
-        else if(player4.marble1 == temphole.getGridLocation() || player4.marble2 == temphole.getGridLocation() ||
-                player4.marble3 == temphole.getGridLocation() || player4.marble4 == temphole.getGridLocation())
-        {
-            KNOCKEDOFF = player4;
-            for(int i = 12; i < 16; i++)
-            {
-                if (holes[i].isEmpty())
-                {
-                    if (player4.marble1 == temphole.getGridLocation())
-                    {
-                        player4.marble1 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player4.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player4.marble2 == temphole.getGridLocation())
-                    {
-                        player4.marble2 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player4.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player4.marble3 == temphole.getGridLocation())
-                    {
-                        player4.marble3 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player4.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    } else if (player4.marble4 == temphole.getGridLocation())
-                    {
-                        player4.marble4 = holes[i].getGridLocation();
-                        holes[i].setFull();
-                        holes[i].setColor(player4.getColor());
-                        KNOCKEDOFFNEWLOCATION = holes[i].getGridLocation();
-                        break;
-                    }
-                }
-            }
-        }
-    }*/
+    }
 
     //Checks to see if a legal move is available
     public boolean isLegal(){
@@ -514,12 +469,6 @@ public class GameBoard {
 
         return isLegal;
     }
-
-    //Returns all hole locations
-   // public int[] getallHoleLocations()
-    //{
-      //  return Hole.allHoleLocations;
-    //}
 
     //Returns all main track locations
     public int[] getMainTrackLocations()
@@ -591,15 +540,5 @@ public class GameBoard {
           winnerFound = false;
 
         return winnerFound; //Game is over
-    }
-
-    public void setKnockedOffMarble()
-    {
-        knockedOffMarble = false;
-    }
-
-    public boolean getKnockedOffMarble()
-    {
-        return knockedOffMarble;
     }
 }
