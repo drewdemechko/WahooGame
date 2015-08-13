@@ -70,6 +70,7 @@ public class GameBoard {
                 for(int i = 0; i <= 3; i++) {
                     //Define starting/home positions
                     holes[i].setFull();
+                    holes[i].setColor(player1.getColor());
                     holes[i].setPlayer(player1);
                     //tempstart[i] = holes[i].getGridLocation();
                     //temphome[i] = holes[i+84].getGridLocation();
@@ -99,6 +100,7 @@ public class GameBoard {
                 for(int i = 4; i <= 7; i++) {
                     //Define starting/home positions
                     holes[i].setFull();
+                    holes[i].setColor(player2.getColor());
                     holes[i].setPlayer(player2);
                     //tempstart[i] = holes[i].getGridLocation();
                     //temphome[i] = holes[i+68].getGridLocation();
@@ -128,6 +130,7 @@ public class GameBoard {
                 for(int i = 8; i <= 11; i++) {
                     //Define starting/home positions
                     holes[i].setFull();
+                    holes[i].setColor(player3.getColor());
                     holes[i].setPlayer(player3);
                     //tempstart[i] = holes[i].getGridLocation();
                     //temphome[i] = holes[i+68].getGridLocation();
@@ -158,6 +161,7 @@ public class GameBoard {
                 for(int i = 12; i <= 15; i++) {
                     //Define starting/home positions
                     holes[i].setFull();
+                    holes[i].setColor(player4.getColor());
                     holes[i].setPlayer(player4);
                     //tempstart[i] = holes[i].getGridLocation();
                     //temphome[i] = holes[i+68].getGridLocation();
@@ -204,15 +208,9 @@ public class GameBoard {
         clearBoard();
     }
 
-    //public boolean knockOff(int n){
-        //Communicates with the Hole class to empty the hole and send marble
-        // back to starting position
-    //}
-
     //Returns possible move
     public int requestMove(int marbleLocation) {
         //Finds index location in allholesarray
-        //int tempOldIndex = Hole.FindHole(marbleLocation);
         int tempOldIndex = current.FindHole(marbleLocation);
         int tempNewIndex = 666;
         int tempNewHole = 666;
@@ -223,33 +221,24 @@ public class GameBoard {
 
         //Check if marble being moved is in start
         for (int x : Hole.startingLocations) {
-            if (x == marbleLocation)
+            if (x == marbleLocation) {
                 inStartingLocation = true;
+                break;
+            }
         }
 
         //Check if marble being moved is in home
         for (int x : Hole.homeLocations) {
-            if (x == marbleLocation)
+            if (x == marbleLocation) {
                 inHomeLocation = true;
+                break;
+            }
         }
 
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
             tempNewIndex = tempOldIndex + getCurrentRoll();
-            //tempNewHole = Hole.allHoleLocations[tempNewIndex];
             tempNewHole = current.holes[tempNewIndex];
-
-            //Find which marble the user wants to move
-            //and set new position
-            if (current.marble1 == marbleLocation) {
-                current.marble1 = tempNewHole;
-            } else if (current.marble2 == marbleLocation) {
-                current.marble2 = tempNewHole;
-            } else if (current.marble3 == marbleLocation) {
-                current.marble3 = tempNewHole;
-            } else if (current.marble4 == marbleLocation) {
-                current.marble4 = tempNewHole;
-            }
 
             //Does not allow player to jump/land on its own marbles.
             for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
@@ -263,23 +252,8 @@ public class GameBoard {
         //If selected marble is in starting location
         else if (inStartingLocation) {
             if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
-                //if(current.marble1 == marbleLocation)
-                    //holes[Hole.FindHole(marbleLocation)].setColor("none");
-                tempNewIndex = 0;//Hole.FindHole(current.holes[0]);
+                tempNewIndex = 0;
                 tempNewHole = current.holes[0];
-                //Find which marble the user wants to move
-                //and set new position
-
-                if (current.marble1 == marbleLocation) {
-                    current.marble1 = tempNewHole;
-                } else if (current.marble2 == marbleLocation) {
-                    current.marble2 = tempNewHole;
-                } else if (current.marble3 == marbleLocation) {
-                    current.marble3 = tempNewHole;
-                } else if (current.marble4 == marbleLocation) {
-                    current.marble4 = tempNewHole;
-                }
-
                 completedTurn = true;
             }
 
@@ -290,30 +264,54 @@ public class GameBoard {
             }
 
         }
-            //holes[Hole.FindHole(marbleLocation)].setEmpty();
 
             if(requestedMove && holes[Hole.FindHole(current.holes[tempNewIndex])].isEmpty())
             {
                 holes[Hole.FindHole(marbleLocation)].setEmpty();
-                //Checks if hole is already occupied by another marble
-                //holes[Hole.FindHole(current.holes[tempOldIndex])].setEmpty();
-                //holes[Hole.FindHole(current.holes[tempOldIndex])].setColor("none");
-                holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
-                holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
+                holes[Hole.FindHole(tempNewHole)].setFull();
+                holes[Hole.FindHole(tempNewHole)].setColor(current.getColor());
                 requestedMove = false;
+
+                //Find which marble the user wants to move
+                //and set new position
+                if (current.marble1 == marbleLocation) {
+                    current.marble1 = tempNewHole;
+                } else if (current.marble2 == marbleLocation) {
+                    current.marble2 = tempNewHole;
+                } else if (current.marble3 == marbleLocation) {
+                    current.marble3 = tempNewHole;
+                } else if (current.marble4 == marbleLocation) {
+                    current.marble4 = tempNewHole;
+                }
             }
             else if(requestedMove && holes[Hole.FindHole(current.holes[tempNewIndex])].isEmpty() == false)
             {
-              knockOff(holes[Hole.FindHole(current.holes[tempNewIndex])], current.holes[tempNewIndex]);
+                //Take appropriate steps to replace marble and send back to starting location
+                knockOff(holes[Hole.FindHole(current.holes[tempNewIndex])], current.holes[tempNewIndex]);
                 KNOCKEDOFFTRUE = true;
                 holes[Hole.FindHole(marbleLocation)].setEmpty(); //TEST TOMORROW
-                holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
-                holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
-              requestedMove = false;
+                holes[Hole.FindHole(tempNewHole)].setFull();
+                holes[Hole.FindHole(tempNewHole)].setColor(current.getColor());
+                requestedMove = false;
+
             }
 
-            if (completedTurn) {
+            if (completedTurn && requestedMove) {
+                //Find which marble the user wants to move
+                //and set new position
+                if (current.marble1 == marbleLocation) {
+                    current.marble1 = tempNewHole;
+                } else if (current.marble2 == marbleLocation) {
+                    current.marble2 = tempNewHole;
+                } else if (current.marble3 == marbleLocation) {
+                    current.marble3 = tempNewHole;
+                } else if (current.marble4 == marbleLocation) {
+                    current.marble4 = tempNewHole;
+                }
+
+                //return Grid location for Game Activity to draw
                 return tempNewHole;
+
             } else {
                 return 666; //WILL CHANGE THIS RETURN
             }
