@@ -29,7 +29,8 @@ public class GameActivity extends Activity {
     private Drawable savedCurrentMarbleImage;//Copies marble image depending on players color
     private Drawable savedFutureImage;       //Copies image of newMarbleLocation in case user decides to NOT move
 
-    private int roll;                       //Holds the value of current roll
+    private int roll;                        //Holds the value of current roll
+    private String winner;
 
     Drawable KNOCKEDOFF;
 
@@ -226,6 +227,11 @@ public class GameActivity extends Activity {
 
                     Tiles[marbleLocation].setImageResource(R.drawable.emptyhole);//Draws image to area the marble moved away from
                     Tiles[newMarbleLocation].setImageDrawable(savedCurrentMarbleImage);
+
+                    if(currentBoard.isGameOver()){
+                        winner = currentBoard.findWinner();
+                        playerTurn.setText(winner);
+                    }
 
                     hasRolled = false;  //Reset dice
 

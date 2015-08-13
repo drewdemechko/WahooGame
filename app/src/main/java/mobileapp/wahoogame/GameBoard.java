@@ -601,4 +601,22 @@ public class GameBoard {
 
         return winnerFound; //Game is over
     }
+
+    public String findWinner() {
+        String playerTurn = "";
+        if (current.getColor() == "red") {
+            playerTurn = "Red Wins!";
+        }
+        if (current.getColor() == "blue") {
+            playerTurn = "Blue Wins!";
+        }
+        if (current.getColor() == "yellow") {
+            playerTurn = "Yellow Wins!";
+        }
+        if (current.getColor() == "green") {
+            playerTurn = "Green Wins!";
+        }
+
+        return playerTurn;
+    }
 }
