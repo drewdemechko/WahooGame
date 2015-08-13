@@ -244,6 +244,7 @@ public class GameBoard {
             //Find which marble the user wants to move
             //and set new position
             //old marble keeps marble number
+            /*
             if (current.marble1 == marbleLocation) {
                 oldMarble = 1;
                 current.marble1 = tempNewHole;
@@ -256,6 +257,11 @@ public class GameBoard {
             } else if (current.marble4 == marbleLocation) {
                 oldMarble = 4;
                 current.marble4 = tempNewHole;
+            }
+            */
+
+            if(tempNewIndex >= current.holes.length){
+                tempNewHole = 666;
             }
 
             //Does not allow player to jump/land on its own marbles.
@@ -275,6 +281,7 @@ public class GameBoard {
                 //Find which marble the user wants to move
                 //and set new position
                 //oldMarble keeps marble number
+                /*
                 if (current.marble1 == marbleLocation) {
                     oldMarble = 1;
                     current.marble1 = tempNewHole;
@@ -288,6 +295,7 @@ public class GameBoard {
                     oldMarble = 4;
                     current.marble4 = tempNewHole;
                 }
+                */
 
                 completedTurn = true;
             }
@@ -347,6 +355,7 @@ public class GameBoard {
                 }
 
             }
+            /*
             else if(!requestedMove){
                 //changes selected marble back to original location if not actually moving
                 if(oldMarble == 1)
@@ -358,6 +367,7 @@ public class GameBoard {
                 else if(oldMarble == 4)
                     current.marble4 = marbleLocation;
             }
+            */
 
             if (completedTurn) {
 
