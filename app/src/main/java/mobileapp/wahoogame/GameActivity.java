@@ -193,16 +193,18 @@ public class GameActivity extends Activity {
                     || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
                     && (hasChosenMarble == false)) {
 
-                hasChosenMarble = true;
+
                 marbleLocation = location; //Stores location of marble selected
                 savedCurrentMarbleImage = Tiles[location].getDrawable(); //Keeps current image saved
-                Tiles[location].setImageResource(findSelectedMarbleImage(currentBoard.current)); //Highlight the current marble
+
 
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
                 //KNOCKEDOFF = Tiles[newMarbleLocation].getDrawable();
 
                 if(newMarbleLocation != 666) {
+                    hasChosenMarble = true;
+                    Tiles[location].setImageResource(findSelectedMarbleImage(currentBoard.current)); //Highlight the current marble
                     savedFutureImage = Tiles[newMarbleLocation].getDrawable();
                     Tiles[newMarbleLocation].setImageResource(findGhostMarbleImage(currentBoard.current));
                 }
@@ -243,6 +245,8 @@ public class GameActivity extends Activity {
                 Tiles[marbleLocation].setImageDrawable(savedCurrentMarbleImage);
                 Tiles[newMarbleLocation].setImageDrawable(savedFutureImage);
                 hasChosenMarble = false;
+
+
 
                 //Catches any other possible variation (should not ever be thrown, but just in case
             } else {

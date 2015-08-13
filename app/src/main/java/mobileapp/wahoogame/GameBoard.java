@@ -214,6 +214,7 @@ public class GameBoard {
         int tempOldIndex = current.FindHole(marbleLocation);
         int tempNewIndex = 666;
         int tempNewHole = 666;
+        int oldMarble = 666;        //hold number on player marble selected in case marble is not moved
 
         boolean inStartingLocation = false;
         boolean inHomeLocation = false;
@@ -240,10 +241,27 @@ public class GameBoard {
             tempNewIndex = tempOldIndex + getCurrentRoll();
             tempNewHole = current.holes[tempNewIndex];
 
+            //Find which marble the user wants to move
+            //and set new position
+            //old marble keeps marble number
+            if (current.marble1 == marbleLocation) {
+                oldMarble = 1;
+                current.marble1 = tempNewHole;
+            } else if (current.marble2 == marbleLocation) {
+                oldMarble = 2;
+                current.marble2 = tempNewHole;
+            } else if (current.marble3 == marbleLocation) {
+                oldMarble = 3;
+                current.marble3 = tempNewHole;
+            } else if (current.marble4 == marbleLocation) {
+                oldMarble = 4;
+                current.marble4 = tempNewHole;
+            }
+
             //Does not allow player to jump/land on its own marbles.
             for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
                 if(holes[Hole.FindHole(current.holes[i])].getColor() == current.getColor())
-                    return 666;
+                    tempNewHole = 666;
             }
 
             completedTurn = true;
@@ -254,6 +272,23 @@ public class GameBoard {
             if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
                 tempNewIndex = 0;
                 tempNewHole = current.holes[0];
+                //Find which marble the user wants to move
+                //and set new position
+                //oldMarble keeps marble number
+                if (current.marble1 == marbleLocation) {
+                    oldMarble = 1;
+                    current.marble1 = tempNewHole;
+                } else if (current.marble2 == marbleLocation) {
+                    oldMarble = 2;
+                    current.marble2 = tempNewHole;
+                } else if (current.marble3 == marbleLocation) {
+                    oldMarble = 3;
+                    current.marble3 = tempNewHole;
+                } else if (current.marble4 == marbleLocation) {
+                    oldMarble = 4;
+                    current.marble4 = tempNewHole;
+                }
+
                 completedTurn = true;
             }
 
@@ -264,6 +299,7 @@ public class GameBoard {
             }
 
         }
+            //holes[Hole.FindHole(marbleLocation)].setEmpty();
 
             if(requestedMove && holes[Hole.FindHole(current.holes[tempNewIndex])].isEmpty())
             {
@@ -294,9 +330,10 @@ public class GameBoard {
                 holes[Hole.FindHole(tempNewHole)].setColor(current.getColor());
                 requestedMove = false;
 
-            }
+                holes[Hole.FindHole(current.holes[tempNewIndex])].setFull();
+                holes[Hole.FindHole(current.holes[tempNewIndex])].setColor(current.getColor());
+              requestedMove = false;
 
-            if (completedTurn && requestedMove) {
                 //Find which marble the user wants to move
                 //and set new position
                 if (current.marble1 == marbleLocation) {
@@ -308,6 +345,21 @@ public class GameBoard {
                 } else if (current.marble4 == marbleLocation) {
                     current.marble4 = tempNewHole;
                 }
+
+            }
+            else if(!requestedMove){
+                //changes selected marble back to original location if not actually moving
+                if(oldMarble == 1)
+                    current.marble1 = marbleLocation;
+                else if(oldMarble == 2)
+                    current.marble2 = marbleLocation;
+                else if(oldMarble == 3)
+                    current.marble3 = marbleLocation;
+                else if(oldMarble == 4)
+                    current.marble4 = marbleLocation;
+            }
+
+            if (completedTurn) {
 
                 //return Grid location for Game Activity to draw
                 return tempNewHole;
