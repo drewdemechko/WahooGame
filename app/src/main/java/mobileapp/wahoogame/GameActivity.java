@@ -140,7 +140,7 @@ public class GameActivity extends Activity {
     public void rollDice(View v) {
 
         //if user has not rolled for his/her turn yet
-        try {
+        //try {
             if (!hasRolled) {
                 currentBoard.setDiceRoll(); //rolls the dice
                 roll = currentBoard.getCurrentRoll(); //stores value of roll
@@ -160,7 +160,7 @@ public class GameActivity extends Activity {
                }
 
             //}
-        }catch(Exception e)
+       // }catch(Exception e)
         {
             //fail to roll dice (Safety net for program error and debugging purposes), send error message to user
         }

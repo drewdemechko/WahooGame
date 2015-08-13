@@ -238,8 +238,17 @@ public class GameBoard {
 
         //If selected marble is in home location or on main track
         if (inStartingLocation == false) {
-            tempNewIndex = tempOldIndex + getCurrentRoll();
-            tempNewHole = current.holes[tempNewIndex];
+            if(tempOldIndex + getCurrentRoll() >= current.holes.length){
+
+                //test debug
+                return 666;
+            }
+            else{
+                tempNewIndex = tempOldIndex + getCurrentRoll();
+                tempNewHole = current.holes[tempNewIndex];
+            }
+
+
 
             //Find which marble the user wants to move
             //and set new position
@@ -260,9 +269,7 @@ public class GameBoard {
             }
             */
 
-            if(tempNewIndex >= current.holes.length){
-                tempNewHole = 666;
-            }
+
 
             //Does not allow player to jump/land on its own marbles.
             for(int i = tempOldIndex+1; i <= tempNewIndex; i++){
