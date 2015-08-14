@@ -139,9 +139,8 @@ public class GameActivity extends Activity {
     //Used when roll dice button is clicked by user
     public void rollDice(View v) {
 
-        //if user has not rolled for his/her turn yet
-        //try {
-            if (!hasRolled) {
+            if (!hasRolled)
+            {
                 currentBoard.setDiceRoll(); //rolls the dice
                 roll = currentBoard.getCurrentRoll(); //stores value of roll
                 String stringRoll = Integer.toString(roll);
@@ -149,21 +148,15 @@ public class GameActivity extends Activity {
                 diceThrow.setText(stringRoll);
                 hasRolled = true;
             }
+
                 //check if legal move is possible
-                if(!currentBoard.isLegal()){
-            //if(currentBoard.getCurrentRoll() != 6 && currentBoard.getCurrentRoll() != 1)
-            //{
+                if(!currentBoard.isLegal())
+                {
                     currentBoard.nextTurn(); //Next player's turn
                     playerTurn.setText(currentBoard.findPlayer());
                     hasRolled = false;  //Reset dice
                     diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
                }
-
-            //}
-       // }catch(Exception e)
-        {
-            //fail to roll dice (Safety net for program error and debugging purposes), send error message to user
-        }
     }
 
     //Listens for hole images being clicked on
@@ -177,13 +170,8 @@ public class GameActivity extends Activity {
 
 
         public void onClick(View view) {
-                    try { //safety net
                         if(hasRolled)
                             move();
-
-                } catch (Exception e) {
-                    //fail to click on screen (Safety net for program error and debugging purposes), send error message to user
-                }
     }
 
         //Communicates with GameBoard class make a move
@@ -201,7 +189,6 @@ public class GameActivity extends Activity {
 
                 //Shows available move
                 newMarbleLocation = currentBoard.requestMove(location);
-                //KNOCKEDOFF = Tiles[newMarbleLocation].getDrawable();
 
                 if(newMarbleLocation != 666) {
                     hasChosenMarble = true;

@@ -2,21 +2,19 @@ package mobileapp.wahoogame;
 
 public class Hole {
 
-    private boolean empty;
-    private String color;
-    static private int holeId; //Way to keep track of holes
-    private int gridLocation;
+    private boolean empty;    //Checks to see if the hole is occupied or empty
+    private String color;     //Keeps track of the marble's color in which currently occupies this hole
+    private int gridLocation; //Keeps track of each hole's grid location on the game activity board
 
+    //Location in relation to the main board
     private boolean onMainTrack;
     private boolean home;
     private boolean startingPosition;
-    private int marbleId; //Holds marbleid
 
     private Player player; //Keeps track of player in the hole
 
     //Static methods used to save memory (only creates once)
     //Cannot be manipulated
-
     static int[] startingLocations = {0,16,32,48,
                                       14,28,42,56,
                                       224,208,192,176,
@@ -112,11 +110,6 @@ public class Hole {
         }
     }
 
-    //public int getGridLocation()
-   // {
-      //  return gridLocation;
-    //}
-
     public boolean isHome()
     {
         return home;
@@ -129,21 +122,6 @@ public class Hole {
     public boolean isOnMainTrack()
     {
         return onMainTrack;
-    }
-
-    public void setPlayer(Player p)
-    {
-        player = p;
-    }
-
-    public void setMarbleid(int m)
-    {
-        marbleId = m;
-    }
-
-    public void releasePlayer()
-    {
-        player = null;
     }
 
     //Finds a hole by gridvalue and returns the index in allHoleLocations

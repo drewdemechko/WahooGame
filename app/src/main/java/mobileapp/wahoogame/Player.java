@@ -35,34 +35,6 @@ public class Player {
         return color;
     }
 
-    public int getfirstHole()
-    {
-        return firstHole;
-    }
-
-    public void setFirstHole(int loc)
-    {
-       firstHole = loc;
-    }
-
-
-    public int[] getCurrentLocations()
-    {
-        return currentLocations;
-    }
-
-    public void setCurrentLocations(int m1, int m2, int m3, int m4)
-    {
-        currentLocations[0] = m1;
-        currentLocations[1] = m2;
-        currentLocations[2] = m3;
-        currentLocations[3] = m4;
-
-        setMarble1(m1);
-        setMarble2(m2);
-        setMarble3(m3);
-        setMarble4(m4);
-    }
     //Sets location of marble
     public void setMarble1(int m1)
     {
@@ -83,10 +55,6 @@ public class Player {
     {
         marble4 = m4;
     }
-    //Not sure if we will need this one because the players shouldn't be
-    // able to change colors mid game
-    /*public void setColor(String c)*/
-    //Finds a hole by gridvalue and returns the index in allHoleLocations
 
     public int FindHole(int n) //pass gridlocation
     {
