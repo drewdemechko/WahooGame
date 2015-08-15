@@ -159,6 +159,11 @@ public class GameActivity extends Activity {
                }
     }
 
+    public void clearBoard()
+    {
+        //Reset graphics on board
+    }
+
     //Listens for hole images being clicked on
     private class HoleImageClickListener implements View.OnClickListener {
 

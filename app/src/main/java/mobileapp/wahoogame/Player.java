@@ -15,6 +15,7 @@ public class Player {
     int[] holes;
     int[] startingLocations = new int[4];
     int[] currentLocations = new int[4];
+    int[] homeLocations = new int[4];
 
     //Where player moves when out of starting location
     private int firstHole;

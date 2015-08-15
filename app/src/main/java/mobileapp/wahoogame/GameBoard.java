@@ -81,10 +81,17 @@ public class GameBoard {
                 player1.startingLocations[2] = player1.marble3;
                 player1.marble4 = 48;
                 player1.startingLocations[3] = player1.marble4;
+
+                player1.homeLocations[0] = 106;
+                player1.homeLocations[1] = 107;
+                player1.homeLocations[2] = 108;
+                player1.homeLocations[3] = 109;
+
                 player1.holes = new int[]{75,76,77,78,79,80,65,50,35,20,5,6,7,8,9,24,39,54,69,84,85,86,87,88,89,
                                             104,119,134,149,148,147,146,145,144,159,174,189,204,219,218,
                                             217,216,215,200,185,170,155,140,139,138,137, 136, 135, 120, 105,
                                             106, 107, 108, 109};
+
                 current = player1; //Set player 1 to hold the first turn
             }
             else if(player2 == null)
@@ -107,6 +114,12 @@ public class GameBoard {
                 player2.startingLocations[2] = player2.marble3;
                 player2.marble4 = 56;
                 player2.startingLocations[3] = player2.marble4;
+
+                player2.homeLocations[0] = 22;
+                player2.homeLocations[1] = 37;
+                player2.homeLocations[2] = 52;
+                player2.homeLocations[3] = 67;
+
                 player2.holes = new int[]{9,24,39,54,69,84,85,86,87,88,89,104,119,134,149,148,147,146,145,144,159,
                                             174,189,204,219,218,217,216,215,200,185,170,155,140,139,138,
                                             137,136,135,120,105,90,75,76,77,78,79,80,65,50,35,20,5,6,7,
@@ -132,6 +145,12 @@ public class GameBoard {
                 player3.startingLocations[2] = player3.marble3;
                 player3.marble4 = 176;
                 player3.startingLocations[3] = player3.marble4;
+
+                player3.homeLocations[0] = 115;
+                player3.homeLocations[1] = 116;
+                player3.homeLocations[2] = 117;
+                player3.homeLocations[3] = 118;
+
                 player3.holes = new int[]{149,148,147,146,145,144,159,174,189,204,219,218,217,216,215,200,185,170,155,
                                                 140,139,138,137,136,135,120,105,90,75,76,77,78,79,80,
                                                 65,50,35,20,5,6,7,8,9,24,39,54,69,84,85,86,87,88,89,
@@ -158,6 +177,12 @@ public class GameBoard {
                 player4.startingLocations[2] = player4.marble3;
                 player4.marble4 = 168;
                 player4.startingLocations[3] = player4.marble4;
+
+                player4.homeLocations[0] = 157;
+                player4.homeLocations[1] = 172;
+                player4.homeLocations[2] = 187;
+                player4.homeLocations[3] = 202;
+
                 player4.holes = new int[]{215,200,185,170,155,
                         140,139,138,137,136,135,120,105,90,75,76,77,78,79,80,
                         65,50,35,20,5,6,7,8,9,24,39,54,69,84,85,86,87,88,89,
@@ -171,12 +196,12 @@ public class GameBoard {
         }
     }
 
-    public void clearBoard()
+    public void clearData()
     {
         //Resets the data back to default values for new game
     }
 
-    public void GameOver()
+    public boolean GameOver()
     {
         //Output winner message
         //Clear board
@@ -184,8 +209,28 @@ public class GameBoard {
         //  output winner
         //   play again? which will call startgame in the GameActivity class
 
-        // clear board
-        clearBoard();
+        //Keep track of home positions filled for each player
+        int player1count = 0;
+        int player2count = 0;
+        int player3count = 0;
+        int player4count = 0;
+
+            for(int j = 0; j < 4; j++) {
+                if (holes[Hole.FindHole(player1.homeLocations[j])].isEmpty() == false)
+                    player1count++;
+                if (holes[Hole.FindHole(player2.homeLocations[j])].isEmpty() == false)
+                    player2count++;
+                if (holes[Hole.FindHole(player3.homeLocations[j])].isEmpty() == false)
+                    player3count++;
+                if (holes[Hole.FindHole(player4.homeLocations[j])].isEmpty() == false)
+                    player4count++;
+            }
+
+        // Clear game board if player has won and display winner in pop up box
+        if(player1count == 4 || player2count == 4 || player3count == 4 || player4count == 4)
+            return true;
+        else
+            return false;
     }
 
     //Returns possible move
