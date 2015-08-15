@@ -1,6 +1,11 @@
 package mobileapp.wahoogame;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Application;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +37,9 @@ public class GameActivity extends Activity {
     private int roll;                        //Holds the value of current roll
     private String winner;
 
+    Context thisActivity = this;
+    AlertDialog.Builder EndofGame;
+
     Drawable KNOCKEDOFF;
 
     //Sets up new blank Wahoo board
@@ -42,6 +50,16 @@ public class GameActivity extends Activity {
 
         //Draws blank 15x15 grid that will represent the board
         GridLayout Board = (GridLayout) findViewById(R.id.GridLayout);
+
+        //Displays a dialog at the end of the game
+        EndofGame = new AlertDialog.Builder(this);
+        EndofGame.setMessage("Would you like to play again?"); //Displays winner
+        YesClickListener yes = new YesClickListener();
+        EndofGame.setPositiveButton("New game", yes);
+        ExitClickListener exit = new ExitClickListener();
+        EndofGame.setNegativeButton("Exit", exit);
+        EndofGame.create();
+        EndofGame.show();
 
 
         //Add new imageview objects to layout a blank Board
@@ -161,7 +179,33 @@ public class GameActivity extends Activity {
 
     public void clearBoard()
     {
-        //Reset graphics on board
+        //Reset game activity
+        this.recreate();
+    }
+
+    public void clearData()
+    {
+        //Reset data by creating a blank class
+        currentBoard = new GameBoard();
+    }
+
+    //Starts a new game when new game is selected
+    private class YesClickListener implements AlertDialog.OnClickListener
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            clearBoard();
+            clearData();
+        }
+    }
+
+    private class ExitClickListener implements AlertDialog.OnClickListener
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            //Close application
+
+        }
     }
 
     //Listens for hole images being clicked on

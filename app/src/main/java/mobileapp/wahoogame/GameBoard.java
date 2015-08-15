@@ -196,11 +196,6 @@ public class GameBoard {
         }
     }
 
-    public void clearData()
-    {
-        //Resets the data back to default values for new game
-    }
-
     public boolean GameOver()
     {
         //Output winner message
