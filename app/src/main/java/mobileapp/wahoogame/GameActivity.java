@@ -51,17 +51,6 @@ public class GameActivity extends Activity {
         //Draws blank 15x15 grid that will represent the board
         GridLayout Board = (GridLayout) findViewById(R.id.GridLayout);
 
-        //Displays a dialog at the end of the game
-        EndofGame = new AlertDialog.Builder(this);
-        EndofGame.setMessage("Would you like to play again?"); //Displays winner
-        YesClickListener yes = new YesClickListener();
-        EndofGame.setPositiveButton("New game", yes);
-        ExitClickListener exit = new ExitClickListener();
-        EndofGame.setNegativeButton("Exit", exit);
-        EndofGame.create();
-        EndofGame.show();
-
-
         //Add new imageview objects to layout a blank Board
         for (int i = 0; i < Tiles.length; i++) {
             Tiles[i] = new ImageView(this); // keep a reference of the new ImageViews in array Tiles[]
@@ -219,8 +208,23 @@ public class GameActivity extends Activity {
 
 
         public void onClick(View view) {
-                        if(hasRolled)
-                            move();
+                            if(currentBoard.isGameOver())
+                            {
+                                //Displays a dialog at the end of the game
+                                EndofGame = new AlertDialog.Builder(thisActivity);
+                                EndofGame.setMessage(currentBoard.current.toString() + " won!"); //Displays winner
+                                YesClickListener yes = new YesClickListener();
+                                EndofGame.setPositiveButton("New game", yes);
+                                ExitClickListener exit = new ExitClickListener();
+                                EndofGame.setNegativeButton("Exit", exit);
+                                EndofGame.create();
+                                EndofGame.show();
+                            }
+                            else
+                            {
+                                if(hasRolled)
+                                    move();
+                            }
     }
 
         //Communicates with GameBoard class make a move
