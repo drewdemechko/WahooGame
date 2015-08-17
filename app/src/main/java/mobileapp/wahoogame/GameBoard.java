@@ -283,7 +283,11 @@ public class GameBoard {
         else if (inStartingLocation) {
             if (getCurrentRoll() == 6 || getCurrentRoll() == 1) {
                 tempNewIndex = 0;
-                tempNewHole = current.holes[0];
+
+                if(holes[Hole.FindHole(current.holes[0])].getColor() == current.getColor())
+                    return 666;
+                else
+                    tempNewHole = current.holes[0];
 
                 completedTurn = true;
             }
