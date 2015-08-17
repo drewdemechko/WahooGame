@@ -162,16 +162,11 @@ public class GameBoard {
                 //Set new player object
                 player4 = new Player(c);
 
-                //Commented Out for Test GameOver
-                /*
                 for(int i = 12; i <= 15; i++) {
                     //Define starting/home positions
                     holes[i].setFull();
                     holes[i].setColor(player4.getColor());
                 }
-
-
-
 
                 //Set player's start/home positions
                 player4.marble1 = 210;
@@ -183,29 +178,14 @@ public class GameBoard {
                 player4.marble4 = 168;
                 player4.startingLocations[3] = player4.marble4;
 
-                */
-
-                //GameOver Test
-                holes[83].setFull();
-                holes[83].setColor(player4.getColor());
-                holes[82].setFull();
-                holes[82].setColor(player4.getColor());
-                holes[81].setFull();
-                holes[81].setColor(player4.getColor());
-                holes[55].setFull();
-                holes[55].setColor(player4.getColor());
-
-                player4.marble1 = 157;
-                player4.startingLocations[0] = 210;
-                player4.marble2 = 172;
-                player4.startingLocations[1] = 196;
-                player4.marble3 = 187;
-                player4.startingLocations[2] = 182;
-                player4.marble4 = 218;
-                player4.startingLocations[3] = 168;
-                //End of GameOver Test
-
-
+                player4.marble1 = 210;
+                player4.startingLocations[0] = player4.marble1;
+                player4.marble2 = 196;
+                player4.startingLocations[1] = player4.marble2;
+                player4.marble3 = 182;
+                player4.startingLocations[2] = player4.marble3;
+                player4.marble4 = 168;
+                player4.startingLocations[3] = player4.marble4;
 
                 player4.homeLocations[0] = 157;
                 player4.homeLocations[1] = 172;
@@ -227,12 +207,6 @@ public class GameBoard {
 
     public boolean GameOver()
     {
-        //Output winner message
-        //Clear board
-        // the game is over
-        //  output winner
-        //   play again? which will call startgame in the GameActivity class
-
         //Keep track of home positions filled for each player
         int player1count = 0;
         int player2count = 0;
@@ -263,7 +237,6 @@ public class GameBoard {
         int tempOldIndex = current.FindHole(marbleLocation);
         int tempNewIndex = 666;
         int tempNewHole = 666;
-        int oldMarble = 666;        //hold number on player marble selected in case marble is not moved
 
         boolean inStartingLocation = false;
         boolean inHomeLocation = false;
@@ -552,11 +525,9 @@ public class GameBoard {
     //Set dice roll to a new random number (1-6)
     public void setDiceRoll()
     {
-        currentRoll = 2;
-        //currentRoll = diceRoll.nextInt(6)+1;
-        //currentRoll = diceRoll.nextInt(2)+1;
-        //currentRoll = 6;
+        currentRoll = diceRoll.nextInt(6)+1;
     }
+
     public int getCurrentRoll()
     {
         return currentRoll;

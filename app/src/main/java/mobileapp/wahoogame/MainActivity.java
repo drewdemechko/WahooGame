@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         // Controls actions when menu items are pressed
         switch (item.getItemId()) {
             case R.id.action_exit:
-                finish();
+                moveTaskToBack(true);
                 return true;
             case R.id.action_settings:
                 //Should open up a new settings activity
