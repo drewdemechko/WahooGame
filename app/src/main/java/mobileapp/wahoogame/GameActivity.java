@@ -51,6 +51,20 @@ public class GameActivity extends Activity {
         //Draws blank 15x15 grid that will represent the board
         GridLayout Board = (GridLayout) findViewById(R.id.GridLayout);
 
+        /*
+        //Displays a dialog at the end of the game
+        EndofGame = new AlertDialog.Builder(this);
+        EndofGame.setMessage("Would you like to play again?"); //Displays winner
+        YesClickListener yes = new YesClickListener();
+        EndofGame.setPositiveButton("New game", yes);
+        ExitClickListener exit = new ExitClickListener();
+        EndofGame.setNegativeButton("Exit", exit);
+        EndofGame.create();
+        EndofGame.show();
+
+        */
+
+
         //Add new imageview objects to layout a blank Board
         for (int i = 0; i < Tiles.length; i++) {
             Tiles[i] = new ImageView(this); // keep a reference of the new ImageViews in array Tiles[]
@@ -86,12 +100,18 @@ public class GameActivity extends Activity {
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player2));
         for (int x: currentBoard.player3.startingLocations)
             Tiles[x].setImageResource(findMarbleColor(currentBoard.player3));
-        for (int x: currentBoard.player4.startingLocations)
-            Tiles[x].setImageResource(findMarbleColor(currentBoard.player4));
+        //for (int x: currentBoard.player4.startingLocations)
+        //    Tiles[x].setImageResource(findMarbleColor(currentBoard.player4));
+        Tiles[157].setImageResource((findMarbleColor(currentBoard.player4)));
+        Tiles[172].setImageResource((findMarbleColor(currentBoard.player4)));
+        Tiles[187].setImageResource((findMarbleColor(currentBoard.player4)));
+        Tiles[218].setImageResource((findMarbleColor(currentBoard.player4)));
 
         //Add player turn to text box
         playerTurn.setText(currentBoard.findPlayer());
     }
+
+
 
     //Returns image of player's marble
     public int findMarbleColor(Player p)
@@ -208,23 +228,10 @@ public class GameActivity extends Activity {
 
 
         public void onClick(View view) {
-                            if(currentBoard.isGameOver())
-                            {
-                                //Displays a dialog at the end of the game
-                                EndofGame = new AlertDialog.Builder(thisActivity);
-                                EndofGame.setMessage(currentBoard.current.toString() + " won!"); //Displays winner
-                                YesClickListener yes = new YesClickListener();
-                                EndofGame.setPositiveButton("New game", yes);
-                                ExitClickListener exit = new ExitClickListener();
-                                EndofGame.setNegativeButton("Exit", exit);
-                                EndofGame.create();
-                                EndofGame.show();
-                            }
-                            else
-                            {
+
                                 if(hasRolled)
                                     move();
-                            }
+
     }
 
         //Communicates with GameBoard class make a move
@@ -271,6 +278,19 @@ public class GameActivity extends Activity {
                     if(currentBoard.isGameOver()){
                         winner = currentBoard.findWinner();
                         playerTurn.setText(winner);
+
+                        //Displays a dialog at the end of the game
+                        EndofGame = new AlertDialog.Builder(thisActivity);
+                        EndofGame.setMessage(currentBoard.current.getColor() + " won!"); //Displays winner
+                        EndofGame.setCancelable(false);
+                        YesClickListener yes = new YesClickListener();
+                        EndofGame.setPositiveButton("New game", yes);
+                        ExitClickListener exit = new ExitClickListener();
+                        EndofGame.setNegativeButton("Exit", exit);
+                        EndofGame.create();
+                        EndofGame.show();
+
+
                     }
 
                     hasRolled = false;  //Reset dice
@@ -302,6 +322,15 @@ public class GameActivity extends Activity {
             }
         }
     }
+
+    public void popUp() {
+        AlertDialog.Builder EndofGame = new AlertDialog.Builder(this);
+        EndofGame.setMessage("Would you like to play again?");
+        //EndofGame.setPositiveButton("Yes",YesClickListener);
+        EndofGame.create();
+        EndofGame.show();
+    }
+
     //Initiated at start up of activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,5 +364,8 @@ public class GameActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+
+   }
+
+
 

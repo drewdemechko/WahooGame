@@ -1,29 +1,25 @@
 /*
-DONE  findGhostMarbleImage() that does the same as findSelectedMarbleImage
 
-DONE  findPlayer() that returns the text at the top of screen
+Change popUp to appear at gameOver
 
-DONE (only for starting locations)  Skip turn if no moves are available so add isLegalMove() in GameBoard - that will check move() in GameBoard for all 4 marble locations
+Figure out how to add to Android Store
 
-DONE We don't want to allow jumps
-______________________________
+Clean up menus
 
-DONE Need to update Gameboard request move class to manipulate hole object to setEmpty false, color, etc.
+Add about information
 
-DONE Implement ability to roll again if 6 || 1 rolled
+Exit for popUp
 
-DONE Add Knockoff() in GameBoard class
+Exit from main menu
 
-Add GameBoard class duties to GameOver such as clearing the board, resetting the data to original values
+Make images scalable
 
-_________________________________
+Dice Animation
 
-Don't allow player to skip move by double tapping
+Add winner to Dialog
 
-Note: call from GameActivity to isLegalMove() to check all 4 if return the same value
+Fix status TextView
 
-Fix bugs along the way
-
-Add checkisGameOver() to check gameOver in GameBoard class and redraw empty board
+Update documentation
 
  */

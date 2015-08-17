@@ -86,7 +86,7 @@
             android:id="@+id/diceThrow"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentEnd="false"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/rollDice"
             android:layout_toEndOf="@+id/rollDice"
@@ -94,6 +94,7 @@
             android:textColor="#ffb4ff54"
             android:gravity="center_vertical|center_horizontal"
             android:singleLine="false" />
+
     </RelativeLayout>
 
 </RelativeLayout>
