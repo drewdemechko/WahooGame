@@ -216,8 +216,8 @@ public class GameActivity extends Activity {
         public void move() {
 
             //Selects current players marble
-            if ((location == currentBoard.current.marble1 || location == currentBoard.current.marble2
-                    || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
+            if ((location == currentBoard.current.getMarbleLoc1() || location == currentBoard.current.getMarbleLoc2()
+                    || location == currentBoard.current.getMarbleLoc3() || location == currentBoard.current.getMarbleLoc4())
                     && (hasChosenMarble == false)) {
 
 
@@ -282,8 +282,9 @@ public class GameActivity extends Activity {
                 }
             //User wants to see all other options
                 //decided not to move the marble that is selected
-            } else if (hasChosenMarble && (location == currentBoard.current.marble1 || location == currentBoard.current.marble2
-                    || location == currentBoard.current.marble3 || location == currentBoard.current.marble4)
+            } else if (hasChosenMarble && (location == currentBoard.current.getMarbleLoc1() ||
+                    location == currentBoard.current.getMarbleLoc2() || location == currentBoard.current.getMarbleLoc3()
+                    || location == currentBoard.current.getMarbleLoc4())
                     ) {
 
                 Tiles[marbleLocation].setImageDrawable(savedCurrentMarbleImage);

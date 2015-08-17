@@ -5,30 +5,21 @@ import android.widget.ImageView;
 
 public class Player {
     private String color;
-    String name;
-    int marble1;
-    int marble2;
-    int marble3;
-    int marble4;
+    private int marbleLoc1;
+    private int marbleLoc2;
+    private int marbleLoc3;
+    private int marbleLoc4;
 
-    private Drawable selectedMarble;
     int[] holes;
     int[] startingLocations = new int[4];
-    int[] currentLocations = new int[4];
     int[] homeLocations = new int[4];
 
     //Where player moves when out of starting location
     private int firstHole;
 
-    //May need this later, not sure yet
-    private boolean isAlive = false;
-    //I think we may need a Starting location of int[] to keep track for knock offs/set backs
-
     public Player(String c)
     {
         color = c;
-        isAlive = true;
-        //Find starting and home locations for new player
     }
 
     public String getColor()
@@ -37,24 +28,43 @@ public class Player {
     }
 
     //Sets location of marble
-    public void setMarble1(int m1)
+    public void setMarbleLoc1(int m1)
     {
-        marble1 = m1;
+        marbleLoc1 = m1;
     }
 
-    public void setMarble2(int m2)
+    public int getMarbleLoc1()
     {
-        marble2 = m2;
+      return marbleLoc1;
     }
 
-    public void setMarble3(int m3)
+    public void setMarbleLoc2(int m2)
     {
-        marble3 = m3;
+        marbleLoc2 = m2;
     }
 
-    public void setMarble4(int m4)
+    public int getMarbleLoc2(){
+        return marbleLoc2;
+    }
+
+    public void setMarbleLoc3(int m3)
     {
-        marble4 = m4;
+        marbleLoc3 = m3;
+    }
+
+    public int getMarbleLoc3()
+    {
+        return marbleLoc3;
+    }
+
+    public void setMarbleLoc4(int m4)
+    {
+        marbleLoc4 = m4;
+    }
+
+    public int getMarbleLoc4()
+    {
+        return marbleLoc4;
     }
 
     public int FindHole(int n) //pass gridlocation
@@ -65,6 +75,6 @@ public class Player {
                 return i;
         }
         //print some error message
-        return 0;
+        return 666;
     }
 }
