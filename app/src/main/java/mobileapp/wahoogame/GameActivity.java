@@ -20,8 +20,8 @@ public class GameActivity extends Activity {
     //The skeleton class, used to display graphics only
         //will have very little data to keep track of
 
-    ImageView Tiles[] = new ImageView[225];  //Array of ImageView objects to display the entire game board
-    GameBoard currentBoard;                  //Object that holds the data and can communicates with all of the others
+    private ImageView Tiles[] = new ImageView[225];  //Array of ImageView objects to display the entire game board
+    private GameBoard currentBoard;                  //Object that holds the data and can communicates with all of the others
     private TextView diceThrow;              //Used to display the number rolled by the dice
     private TextView playerTurn;             //Used to display which players turn it is
     private boolean hasRolled = false;       //To check if the dice has been rolled for the current player
@@ -37,10 +37,10 @@ public class GameActivity extends Activity {
     private int roll;                        //Holds the value of current roll
     private String winner;
 
-    Context thisActivity = this;
-    AlertDialog.Builder EndofGame;
+    private Context thisActivity = this;
+    private AlertDialog.Builder EndofGame;
 
-    Drawable KNOCKEDOFF;
+    private Drawable KNOCKEDOFF;
 
     //Sets up new blank Wahoo board
     public void startGame() {
