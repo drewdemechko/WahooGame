@@ -4,24 +4,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/black"
+    android:background="#ff000000"
     tools:context="mobileapp.wahoogame.GameActivity"
     tools:targetApi="11">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Player Turn"
-        android:id="@+id/playerturn"
-        android:textColor="#ff64ff2a"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:textSize="32dp"
-        android:textAlignment="gravity"
-        android:layout_alignRight="@+id/linearLayout"
-        android:layout_alignEnd="@+id/linearLayout"
-        android:gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,10 +17,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:background="@drawable/wood_grain"
         android:gravity="center"
-        android:layout_below="@+id/playerturn"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="false"
+        android:background="@drawable/wood_grain">
 
         <GridLayout
             android:layout_width="wrap_content"
@@ -56,44 +43,68 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="false">
         </GridLayout>
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="false"
         android:id="@+id/relativeLayout">
 
-        <Button
+        <ImageView android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Roll Dice"
-            android:id="@+id/rollDice"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
-            android:nestedScrollingEnabled="true"
-            android:onClick="rollDice" />
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:onClick="HandleClick"
+            android:src="@drawable/dice3droll"
+            android:layout_gravity="left"
+            android:padding="20dp"
+            android:layout_alignParentStart="false"
+            android:layout_centerVertical="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:textSize="32dp"
-            android:id="@+id/diceThrow"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/rollDice"
-            android:layout_toEndOf="@+id/rollDice"
-            android:autoText="false"
-            android:textColor="#ffb4ff54"
-            android:gravity="center_vertical|center_horizontal"
-            android:singleLine="false" />
+            android:layout_toRightOf="@+id/imageView1"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player Turn"
+                android:id="@+id/playerturn"
+                android:textColor="#ffffffff"
+                android:textSize="25dp"
+                android:textAlignment="gravity"
+                android:gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/imageView1"
+                android:layout_toEndOf="@+id/imageView1"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Roll"
+                android:textSize="20dp"
+                android:id="@+id/status"
+                android:autoText="false"
+                android:textColor="#ffffffff"
+                android:gravity="center_vertical|center_horizontal"
+                android:singleLine="false"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </RelativeLayout>
 

@@ -1,32 +1,18 @@
 package mobileapp.wahoogame;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-
-public class MainActivity extends Activity {
-
-    public void openGameActivity(View v) {
-        //Opens a new Game Activity
-        Intent GameActivity = new Intent(MainActivity.this, GameActivity.class);
-        startActivity(GameActivity);
-    }
-
-    public void openRulesActivity(View v){
-        //Opens the rules activity
-        Intent RulesActivity = new Intent(MainActivity.this, RulesActivity.class);
-        startActivity(RulesActivity);
-    }
-
+/**
+ * Created by Stephen on 8/18/15.
+ */
+public class RulesActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_rules);
     }
 
     @Override
@@ -41,7 +27,7 @@ public class MainActivity extends Activity {
         // Controls actions when menu items are pressed
         switch (item.getItemId()) {
             case R.id.action_exit:
-                moveTaskToBack(true);
+                finish();
                 return true;
             case R.id.action_settings:
                 //Should open up a new settings activity
@@ -50,4 +36,5 @@ public class MainActivity extends Activity {
                 return false;
         }
     }
+
 }

@@ -20,6 +20,12 @@
             android:name=".GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+        <activity
+            android:name=".RulesActivity"
+            android:label="Rules">
+
+        </activity>
+
     </application>
 
 </manifest>

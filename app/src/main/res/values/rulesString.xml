@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rules">
+        The objective of Wahoo is to move each of your marbles from their starting positions, around the board and into their home positions.
+        \n\nThe game begins by each player rolling the dice.  If the player rolls either a 6 or a 1, the player may move one marble from the starting position to the player’s starting corner.  The player may then roll the dice again.  If the player does not roll a 6 or 1, it is the next player’s turn.  The turns move clockwise.  Each player will continue to roll once each turn until the player has rolled a 6 or 1 and can leave the starting position.
+        \n\nOnce the player has a marble “out,” he/she will roll the dice once each turn and then move the number of holes on the dice.
+        \n\nIf the player rolls a 6 or 1, he/she will move the number of spaces and then roll again.  If the player continues to roll a 6 or 1, the player will continue to roll until a number that is not a 6 or 1 is rolled.  There is no limit to the amount of times a player may roll again.  When a player is able to roll again, he/she is not confined to move the marble previously moved.  Instead, the player may move any marble to player owns that can legally move.
+        \n\nIf a player rolls a number that would cause him/her to jump over or to land on one of his/her own marbles, this player may not move this marble.
+        \n\nIf a player rolls a number that lands in a hole that is occupied by a different player, the player occupying the hole is “knocked off” and returned to his/her starting position.
+        \n\nIf a player is able to move, the player must move even if this is undesirable.  A player is not allowed to skip a turn if there is a legal move to be made.
+        \n\nIf there is no legal move to be made, the player cannot move and it is the next player’s turn.
+        \n\nThe game ends when any player is able to move all 4 marbles into his/her home positions.  If a player is close to home, but roles a number too high and there is no available hole, the player is unable to move and it is the next players turn.
+
+    </string>
+</resources>

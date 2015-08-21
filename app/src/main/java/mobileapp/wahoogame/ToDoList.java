@@ -1,22 +1,22 @@
 /*
 
-Change popUp to appear at gameOver
+DONE - Change popUp to appear at gameOver
 
-Figure out how to add to Android Store
+WAIT - Figure out how to add to Android Store
 
 Clean up menus
 
-Add about information
+DONE - Add about information
 
-Exit for popUp
+DONE - (Not going to Exit - Main Menu instead)Exit for popUp
 
-Exit from main menu
+DONE - (No exit button in Android)Exit from main menu
 
 Make images scalable
 
-Dice Animation
+DONE - Dice Animation
 
-Add winner to Dialog
+DONE - Add winner to Dialog
 
 Fix status TextView
 
