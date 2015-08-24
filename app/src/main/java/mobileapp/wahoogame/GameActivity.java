@@ -164,30 +164,6 @@ public class GameActivity extends Activity {
         }
 
     }
-    /*
-    //Used when roll dice button is clicked by user
-    public void rollDice(View v) {
-
-            if (!hasRolled)
-            {
-                currentBoard.setDiceRoll(); //rolls the dice
-                roll = currentBoard.getCurrentRoll(); //stores value of roll
-                String stringRoll = Integer.toString(roll);
-
-                diceThrow.setText(stringRoll);
-                hasRolled = true;
-            }
-
-                //check if legal move is possible
-                if(!currentBoard.isLegal())
-                {
-                    currentBoard.nextTurn(); //Next player's turn
-                    playerTurn.setText(currentBoard.findPlayer());
-                    hasRolled = false;  //Reset dice
-                    diceThrow.setText("Please roll"); //Warns the user to roll the dice before making a move
-               }
-    }
-    */
 
     public void clearBoard()
     {
@@ -218,7 +194,6 @@ public class GameActivity extends Activity {
 
             Intent i = new Intent(getBaseContext(), MainActivity.class);
             startActivity(i);
-
         }
     }
 

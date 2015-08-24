@@ -18,8 +18,10 @@ DONE - Dice Animation
 
 DONE - Add winner to Dialog
 
-Fix status TextView
+DONE??? - Fix status TextView - Looks done to me, not sure what is wrong with it.
 
-Update documentation
+DONE - Update documentation
+
+Revert back to original dice image after players turn is completed
 
  */
