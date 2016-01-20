@@ -2,9 +2,6 @@ package mobileapp.wahoogame;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
-import android.app.Fragment;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -192,7 +189,7 @@ public class GameActivity extends Activity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
-            Intent i = new Intent(getBaseContext(), MainActivity.class);
+            Intent i = new Intent(getBaseContext(), TitleActivity.class);
             startActivity(i);
         }
     }
