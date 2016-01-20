@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Options Screen"
+        android:id="@+id/options_title"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="40dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New 1 Player Game"
+        android:id="@+id/options_new1PlayerGame"
+        android:onClick="openGameActivity2"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New AI Game"
+        android:id="@+id/options_newAIGame"
+        android:layout_gravity="center_horizontal"
+        android:onClick="openAIGameActivity" />
+</LinearLayout>
