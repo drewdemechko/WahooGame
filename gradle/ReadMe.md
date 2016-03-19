@@ -1,0 +1,6 @@
+#Wahoo Android Game
+Technologies Used: Android Studio, Java, and XML 
+
+This project was an Android application modeled after the game "Wahoo" which is just an earlier version of "Trouble" or "Sorry" that originated in the Appalachian hills but has been adopted by many families in my region.
+This application was developed with the help of the Android Studio IDE which we decided to use instead of Eclipse due to the fact that it is newer and has been dedicated as the official IDE for Android applications. I worked on this project during the 2015 Summer after work hours with another intern at Seagate.
+It was definitely a busy Summer doing both holding a full time internship position and trying to finish the Android application before school started. Right now the application does multiplayer 4 person functionality on the same device. We hope to add multiplayer functionality using networks in the future and possibly adding some Artificial intelligence to allow for AI to play against a single user. The design of the app is attractive yet efficient and the functionality works as it regards to gameplay rules of Wahoo such as other player knockoffs, leaving the base, moving across the board, and checking the board for a winner.
